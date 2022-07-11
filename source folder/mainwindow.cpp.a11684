@@ -1,0 +1,2134 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+
+    ui->setupUi(this);
+
+    qApp->setStyle(QStyleFactory::create("fusion"));
+//          QPalette palette;
+//          palette.setColor(QPalette::Window, QColor(53,53,53));
+//          palette.setColor(QPalette::WindowText, Qt::white);
+//          palette.setColor(QPalette::Base, QColor(15,15,15));
+//          palette.setColor(QPalette::AlternateBase, QColor(53,53,53));
+//          palette.setColor(QPalette::ToolTipBase, Qt::white);
+//          palette.setColor(QPalette::ToolTipText, Qt::white);
+//          palette.setColor(QPalette::Text, Qt::white);
+//          palette.setColor(QPalette::Button, QColor(53,53,53));
+//          palette.setColor(QPalette::ButtonText, Qt::white);
+//          palette.setColor(QPalette::BrightText, Qt::red);
+
+//          palette.setColor(QPalette::Highlight, QColor(142,45,197).lighter());
+//          palette.setColor(QPalette::HighlightedText, Qt::black);
+//          qApp->setPalette(palette);
+    QCoreApplication::setApplicationName("Abyaz");
+    QCoreApplication::setOrganizationName("Abyaz-co");
+    qApp->setWindowIcon(QIcon(":/rec/app.ico"));
+    config();
+    loadSetting();
+
+    showMaximized();
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
+void MainWindow::config()
+{
+
+
+    setDefultSetting();
+    setShortcuts();
+    downloader=new Downloader();
+    downloadControl=new DownloadControl(this);
+    db=new Database;
+    allQuran=db->getListAllSore();
+    langTransList=db->getLangTranList();
+    qary=db->getQary();
+    setCentrMainWindow();
+    createPages();
+    createJuzList();
+    createBookmarkList();
+
+
+    currentAyeOBJ=allQuran->value(currentSore)->getAye().at(currentAye-1);
+
+    scenePage=new ScenePage(ui->graphicsView);
+
+    ui->graphicsView->setScene(scenePage);
+    ui->graphicsView->setSceneRect(scenePage->sceneRect());
+    scenePage->paintPage(pages.at(currentPage-1),currentAyeOBJ->getAyeInTwoPage());
+
+    searchText=db->getSearchText();
+    ui->treeWidget_index->setAllQuran(allQuran);
+    ui->treeWidget_index->setSearchText(searchText);
+    ui->treeWidget_index->showList();
+    ui->treeWidget_index->setTypeTreeWidget(Index::TreeIndex);
+    setComboFilterIndex();
+
+
+    ui->tableWidget_bookmark->setBookmarks(bookmarks);
+
+
+    pageCombo=new QComboBox(this);
+    soreCombo=new QComboBox(this);
+    ayeCombo=new QComboBox(this);
+    juzCombo=new QComboBox(this);
+    qaryCombo=new QComboBox(this);
+
+    pageComboLabel=new QLabel("page",this);
+    soreComboLabel=new QLabel("sore",this);
+    ayeComboLabel=new QLabel("aye",this);
+    juzComboLabel=new QLabel("juz",this);
+    qaryComboLabel=new QLabel("qary",this);
+
+
+    ui->toolButton_aye_next->setIcon(style()->standardIcon(QStyle::SP_MediaSkipForward));
+    ui->toolButton_pre_aye->setIcon(style()->standardIcon(QStyle::SP_MediaSkipBackward));
+    ui->toolButton_forward->setIcon(style()->standardIcon(QStyle::SP_MediaSeekForward));
+    ui->toolButton_backward->setIcon(style()->standardIcon(QStyle::SP_MediaSeekBackward));
+
+    ui->toolButton_download->setIcon(style()->standardIcon(QStyle::SP_ArrowDown));
+
+    setComboSoundPanelItem();
+    setSoundPanelDirection();
+
+
+    combo_trans_lang=new QComboBox(this);
+    combo_trans_size=new QComboBox(this);
+    combo_trans_trans=new QComboBox(this);
+    label_trans_lang=new QLabel("lang",this);
+    label_trans_size=new QLabel("size",this);
+    label_trans_trans=new QLabel("trans",this);
+    button_trans_color=new QPushButton("color",this);
+    setComboTransLangItem();
+    setTranslateWidget();
+
+    player=new Audio();
+    handleQaryCombo(0);
+
+
+    setting=new Setting(this);
+    setting->setQary(qary);
+
+
+
+    ui->treeWidget_search->setAllQuran(allQuran);
+    ui->treeWidget_search->setSearchText(searchText);
+    ui->treeWidget_search->setTypeTreeWidget(Index::TreeSearch);
+
+    setComboLangSearch();//call after setCombo_lang_trans becuse for langtransList
+
+    setComboLangBookmark();
+    setComboFilterBookmark();
+
+
+
+    connect(scenePage,SIGNAL(itemClicked(int,int)),this,SLOT(clickedAye(int,int)));
+    connect(pageCombo,SIGNAL(currentIndexChanged(int)),this,SLOT(handlePageCombo(int)));
+    connect(soreCombo,SIGNAL(currentIndexChanged(int)),this,SLOT(handleSoreCombo(int)));
+    connect(ayeCombo,SIGNAL(currentIndexChanged(int)),this,SLOT(handleAyeCombo(int)));
+    connect(juzCombo,SIGNAL(currentIndexChanged(int)),this,SLOT(handleJuzCombo(int)));
+    connect(qaryCombo,SIGNAL(currentIndexChanged(int)),this,SLOT(handleQaryCombo(int)));
+
+
+
+    connect(player,SIGNAL(duration(int)),this,SLOT(setRangeMainSlider(int)));
+    connect(player,SIGNAL(changePosition(int)),this,SLOT(handlePlayerPosition(int)));
+    connect(ui->horizontalSlider_Main,SIGNAL(changedValue(int)),this,SLOT(handleChangeValueMainSlider(int)));
+    connect(ui->slider_volum,SIGNAL(sliderMoved(int)),player,SLOT(setVolum(int)));
+    connect(ui->slider_volum,SIGNAL(changedValue(int)),player,SLOT(setVolum(int)));
+    connect(ui->slider_volum,SIGNAL(valueChanged(int)),player,SLOT(setVolum(int)));
+
+    connect(player,SIGNAL(endSound()),this,SLOT(endSoundHandle()));
+    connect(this,SIGNAL(endBookmarkPlay()),ui->tableWidget_bookmark,SLOT(handleEndBookmarkPlay()));
+
+
+
+    connect(downloader,SIGNAL(report(QString)),this,SLOT(handleDownloadReport(QString)));
+    connect(downloader,SIGNAL(downloaded(DownloadInfo*)),this,
+            SLOT(handleDownloadedFile(DownloadInfo*)));
+    connect(downloader,SIGNAL(updatedDownloadList(QQueue<DownloadInfo*>*)),
+            downloadControl,SLOT(setDownloadList(QQueue<DownloadInfo*>*)));
+    connect(downloader,SIGNAL(bytesReceived(qint64,qint64)),
+            downloadControl,SLOT(reciveCurrentDownload(qint64,qint64)));
+
+    connect(downloadControl,SIGNAL(stop()),downloader,SLOT(stopDownload()));
+
+    connect(ui->tableWidget_bookmark,SIGNAL(playBookmark(Aye*)),
+            this,SLOT(playBookmark(Aye*)));
+
+    connect(ui->tableWidget_bookmark,SIGNAL(updateBoomark(int,int,QString)),
+            ui->treeWidget_index,SLOT(changeBackgroundColor(int,int,QString)));
+    connect(ui->tableWidget_bookmark,SIGNAL(deleteBookmark(int,int,QString)),
+            ui->treeWidget_index,SLOT(changeBackgroundColor(int,int,QString)));
+
+    connect(ui->tableWidget_bookmark,SIGNAL(updateBoomark(int,int,QString)),
+            ui->treeWidget_search,SLOT(changeBackgroundColor(int,int,QString)));
+    connect(ui->tableWidget_bookmark,SIGNAL(deleteBookmark(int,int,QString)),
+            ui->treeWidget_search,SLOT(changeBackgroundColor(int,int,QString)));
+
+    connect(ui->tableWidget_bookmark,SIGNAL(updateBoomark(int,int,QString)),
+            ui->treeWidget_search,SLOT(changeBackgroundColor(int,int,QString)));
+    connect(ui->tableWidget_bookmark,SIGNAL(deleteBookmark(int,int,QString)),
+            ui->treeWidget_search,SLOT(changeBackgroundColor(int,int,QString)));
+
+    connect(scenePage,SIGNAL(bookmarkUpdate(int,int,QString)),this,
+            SLOT(bookmarkHandle(int,int,QString)));
+    connect(scenePage,SIGNAL(bookmarkUpdate(int,int,QString)),
+            ui->treeWidget_index,SLOT(changeBackgroundColor(int,int,QString)));
+    connect(scenePage,SIGNAL(bookmarkUpdate(int,int,QString)),
+            ui->treeWidget_search,SLOT(changeBackgroundColor(int,int,QString)));
+
+    connect(ui->tableWidget_bookmark,SIGNAL(updateBoomark(int,int,QString)),
+            this,SLOT(bookmarkHandle(int,int,QString)));
+    connect(ui->tableWidget_bookmark,SIGNAL(deleteBookmark(int,int,QString)),
+            this,SLOT(bookmarkHandle(int,int,QString)));
+    connect(ui->treeWidget_index,SIGNAL(updateBookmark(int,int,QString)),
+            this,SLOT(bookmarkHandle(int,int,QString)));
+    connect(ui->treeWidget_index,SIGNAL(deleteBookmark(int,int,QString)),
+            this,SLOT(bookmarkHandle(int,int,QString)));
+
+    connect(ui->treeWidget_search,SIGNAL(updateBookmark(int,int,QString)),
+            this,SLOT(bookmarkHandle(int,int,QString)));
+    connect(ui->treeWidget_search,SIGNAL(deleteBookmark(int,int,QString)),
+            this,SLOT(bookmarkHandle(int,int,QString)));
+
+    connect(ui->tableWidget_bookmark,SIGNAL(clickedDoubleItem(Aye*)),
+            this,SLOT(itemsClickHandle(Aye*)));
+    connect(ui->treeWidget_index,SIGNAL(clickedItem(Aye*)),
+            this,SLOT(itemsClickHandle(Aye*)));
+    connect(ui->treeWidget_search,SIGNAL(clickedItem(Aye*)),this,
+            SLOT(itemsClickHandle(Aye*)));
+
+    connect(setting,SIGNAL(downloadSetting(Global::DownloadState)),this,
+            SLOT(setDownloadState(Global::DownloadState)));
+
+    connect(setting,SIGNAL(addQarySetting(Qary*)),this,SLOT(handleAddQary(Qary*)));
+    connect(setting,SIGNAL(editQarySetting(Qary*)),this,SLOT(handleEditQary(Qary*)));
+    connect(setting,SIGNAL(deleteQarySetting(Qary*)),this,SLOT(handleDeleteQary(Qary*)));
+
+    connect(setting,SIGNAL(languageSetting(QString)),this,SLOT(handleLanguageSetting(QString)));
+    connect(setting,SIGNAL(settingsSaves()),this,SLOT(saveSetting()));
+
+    connect(combo_trans_lang,SIGNAL(currentTextChanged(QString)),
+            this,SLOT(setComboTrans_trans(QString)));
+    connect(combo_trans_size,SIGNAL(currentTextChanged(QString))
+            ,this,SLOT(setSizeTrans(QString)));
+    connect(button_trans_color,SIGNAL(clicked(bool)),
+            this,SLOT(choosetransColor()));
+    connect(combo_trans_trans,SIGNAL(currentTextChanged(QString)),
+            this,SLOT(setCurrentTranslation(QString)));
+    connect(combo_trans_trans,SIGNAL(currentTextChanged(QString)),
+            this,SLOT(setCurrentTranslation(QString)));
+    connect(combo_trans_size,SIGNAL(currentTextChanged(QString)),
+            this,SLOT(setSizeTrans(QString)));
+
+    connect(ui->comboBox_lang_search,SIGNAL(currentIndexChanged(QString)),
+            this,SLOT(setComboTransSearch(QString)));
+    connect(ui->comboBox_lang_book,SIGNAL(currentTextChanged(QString)),
+            this,SLOT(setComboTransBookmark(QString)));
+
+    connect(ui->dockWidget_index_2,SIGNAL(close()),
+            ui->btn_index,SLOT(trigger()));
+    connect(ui->dockWidget_search_2,SIGNAL(close()),
+            ui->btn_search,SLOT(trigger()));
+    connect(ui->dock_bookmark_2,SIGNAL(close()),
+            ui->btn_bookmark,SLOT(trigger()));
+    connect(ui->dock_trans,SIGNAL(close()),
+            ui->btn_translate,SLOT(trigger()));
+
+
+
+    handleLanguageSetting(Language::getCurrentLanguage());
+    adjustSize();
+    setFocus();
+}
+
+void MainWindow::setDefultSetting()
+{
+
+    Language::setCurrentLanguage("persian");
+    Language::loadLanguages();
+
+    playerState=Global::NormalPlay;
+    direction=Qt::RightToLeft;
+    translatioColor=Qt::black;
+    translationFontSize="10";
+    combosChanged=false;
+    repeatState=Global::NoRepeat;
+    downloadStat=Global::DownloadAye;
+    currentSore=1;
+    currentAye=1;
+    currentPage=1;
+    hiddenPage=false;
+}
+void MainWindow::loadSetting()
+{
+
+    if(setting->settingExist()){
+        downloadStat=static_cast<Global::DownloadState>(setting->loadSetting("downloadState").toUInt());
+        qaryCombo->setCurrentText(setting->loadSetting("qary").toString());
+        soreCombo->setCurrentText(setting->loadSetting("sore").toString());
+        ayeCombo->setCurrentText(QString::number(setting->loadSetting("aye").toInt()));
+
+        Language::setCurrentLanguage(setting->loadSetting("language").toString());
+        handleLanguageSetting(Language::getCurrentLanguage());
+
+        if(setting->loadSetting("indexDock").toBool()){
+            ui->btn_index->setChecked(true);
+            ui->dockWidget_index_2->setHidden(false);
+        }
+        else{
+            ui->btn_index->setChecked(false);
+            ui->dockWidget_index_2->setHidden(true);
+        }
+
+        if(setting->loadSetting("searchDock").toBool()){
+            ui->btn_search->setChecked(true);
+            ui->dockWidget_search_2->setHidden(false);
+        }
+        else{
+            ui->btn_search->setChecked(false);
+            ui->dockWidget_search_2->setHidden(true);
+        }
+
+
+        if(setting->loadSetting("bookmarkDock").toBool()){
+            ui->btn_bookmark->setChecked(true);
+            ui->dock_bookmark_2->setHidden(false);
+        }
+        else{
+            ui->btn_bookmark->setChecked(false);
+            ui->dock_bookmark_2->setHidden(true);
+        }
+
+
+        if(setting->loadSetting("transDock").toBool()){
+            ui->btn_translate->setChecked(true);
+            ui->dock_trans->setHidden(false);
+        }
+        else{
+            ui->btn_translate->setChecked(false);
+            ui->dock_trans->setHidden(true);
+        }
+
+        Qt::DockWidgetArea dcBook=static_cast<Qt::DockWidgetArea>(setting->loadSetting("bookDocArea").toUInt());
+        Qt::DockWidgetArea dcTrans=static_cast<Qt::DockWidgetArea>(setting->loadSetting("transDocArea").toUInt());
+
+        setDockToCenterMainWindow(dcBook,dcTrans);
+
+    }
+    else{
+        setDockToCenterMainWindow(Qt::BottomDockWidgetArea,Qt::BottomDockWidgetArea);
+    }
+
+}
+
+void MainWindow::saveSetting()
+{
+    uint dwn=static_cast<uint>(downloadStat);
+    setting->saveSetting("downloadState",dwn);
+    setting->saveSetting("qary",currentQary->getName());
+    setting->saveSetting("sore",currentAyeOBJ->getSoreName());
+    setting->saveSetting("aye",currentAye);
+
+    setting->saveSetting("language",Language::getCurrentLanguage());
+    setting->saveSetting("indexDock",ui->btn_index->isChecked());
+    setting->saveSetting("bookmarkDock",ui->btn_bookmark->isChecked());
+    setting->saveSetting("searchDock",ui->btn_search->isChecked());
+    setting->saveSetting("transDock",ui->btn_translate->isChecked());
+
+    uint dcBook=static_cast<uint>(window->dockWidgetArea(ui->dock_bookmark_2));
+    setting->saveSetting("bookDocArea",dcBook);
+
+    uint dcTrans=static_cast<uint>(window->dockWidgetArea(ui->dock_trans));
+    setting->saveSetting("transDocArea",dcTrans);
+
+}
+
+void MainWindow::show()
+{
+    //setTaskbarWidgets();
+    QMainWindow::show();
+
+}
+
+
+
+
+void MainWindow::setTaskbarWidgets()
+{
+
+
+    taskbar=new QWinThumbnailToolBar(this);
+    taskbar->setWindow(this->windowHandle());
+
+    tskNext=new QWinThumbnailToolButton(taskbar);
+    tskNext->setIcon(style()->standardIcon(QStyle::SP_MediaSeekForward));
+    tskPlay=new QWinThumbnailToolButton(taskbar);
+    tskPlay->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+    tskPause=new QWinThumbnailToolButton(taskbar);
+    tskPause->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+    tskPre=new QWinThumbnailToolButton(taskbar);
+    tskPre->setIcon(style()->standardIcon(QStyle::SP_MediaSeekBackward));
+
+    connect(tskNext,SIGNAL(clicked()),this,SLOT(nextAye()));
+    connect(tskPlay,SIGNAL(clicked()),this,SLOT(on_pushButton_playStop_clicked()));
+    connect(tskPause,SIGNAL(clicked()),this,SLOT(on_pushButton_pausePlay_clicked()));
+    connect(tskPre,SIGNAL(clicked()),this,SLOT(preAye()));
+
+    tskPause->setEnabled(false);
+
+
+    taskbar->addButton(tskPre);
+    taskbar->addButton(tskPause);
+    taskbar->addButton(tskPlay);
+    taskbar->addButton(tskNext);
+
+
+}
+
+
+
+void MainWindow::setTranslateWidget()
+{
+    ui->horizontalLayout_translate->removeWidget(button_trans_color);
+    ui->horizontalLayout_translate->removeWidget(combo_trans_size);
+    ui->horizontalLayout_translate->removeWidget(label_trans_size);
+    ui->horizontalLayout_translate->removeWidget(combo_trans_trans);
+    ui->horizontalLayout_translate->removeWidget(label_trans_trans);
+    ui->horizontalLayout_translate->removeWidget(combo_trans_lang);
+    ui->horizontalLayout_translate->removeWidget(label_trans_lang);
+
+    if(direction==Qt::RightToLeft){
+        ui->horizontalLayout_translate->addWidget(label_trans_lang);
+        ui->horizontalLayout_translate->addWidget(combo_trans_lang);
+        ui->horizontalLayout_translate->addWidget(label_trans_trans);
+        ui->horizontalLayout_translate->addWidget(combo_trans_trans);
+        ui->horizontalLayout_translate->addWidget(label_trans_size);
+        ui->horizontalLayout_translate->addWidget(combo_trans_size);
+        ui->horizontalLayout_translate->addWidget(button_trans_color);
+    }
+    else if(direction==Qt::LeftToRight){
+
+
+        ui->horizontalLayout_translate->addWidget(combo_trans_lang);
+        ui->horizontalLayout_translate->addWidget(label_trans_lang);
+        ui->horizontalLayout_translate->addWidget(combo_trans_trans);
+        ui->horizontalLayout_translate->addWidget(label_trans_trans);
+        ui->horizontalLayout_translate->addWidget(combo_trans_size);
+        ui->horizontalLayout_translate->addWidget(label_trans_size);
+        ui->horizontalLayout_translate->addWidget(button_trans_color);
+
+    }
+}
+
+void MainWindow::setComboTransLangItem()
+{
+
+    combo_trans_lang->addItems(QStringList(langTransList->keys()));
+    setComboTrans_trans(combo_trans_lang->currentText());
+
+    for(int i=8;i<=32;i++)
+        combo_trans_size->addItem(QString::number(i));
+
+
+
+}
+
+void MainWindow::showTranslation()
+{
+    if(!currentTranslation.isEmpty()){
+        if(currentAyeOBJ->getChapter()!=1 && currentAyeOBJ->getChapter()!=9)
+            ui->textEdit_trans->setText(currentTranslation.value(currentAyeOBJ->getChapter()).at(currentAyeOBJ->getVerse()));
+        else
+            ui->textEdit_trans->setText(currentTranslation.value(currentAyeOBJ->getChapter()).at(currentAyeOBJ->getVerse()-1));
+
+        }
+}
+
+
+void MainWindow::setComboTrans_trans(QString l)
+{
+    combo_trans_trans->clear();
+
+    combo_trans_trans->addItems(QStringList(*langTransList->value(l)));
+    setCurrentTranslation(combo_trans_trans->currentText());
+
+}
+
+void MainWindow::setComboTransSearch(QString l)
+{
+    ui->comboBox_trans_search->clear();
+
+    ui->comboBox_trans_search->addItems(QStringList(*langTransList->value(l)));
+}
+
+void MainWindow::setComboTransBookmark(QString l)
+{
+    ui->comboBox_trans_book->clear();
+
+    ui->comboBox_trans_book->addItems(QStringList(*langTransList->value(l)));
+}
+
+void MainWindow::setCurrentTranslation(QString s)
+{
+    if(QString::compare(s,"")!=0){
+        currentTranslation=db->getTranslation(combo_trans_lang->currentText(),s);
+        showTranslation();
+    }
+}
+
+void MainWindow::setSizeTrans(QString s)
+{
+
+
+    ui->textEdit_trans->selectAll();
+    ui->textEdit_trans->setFontPointSize(s.toInt());
+    QTextCursor c=ui->textEdit_trans->textCursor();
+    c.clearSelection();
+    ui->textEdit_trans->setTextCursor(c);
+    translationFontSize=s;
+
+}
+
+void MainWindow::choosetransColor()
+{
+    QColorDialog color;
+    setColorTrans(color.getColor());
+
+}
+
+void MainWindow::handleDownloadReport(QString s)
+{
+    ui->label_download->setText(Language::translate(s));
+}
+
+void MainWindow::setColorTrans(QColor c)
+{
+
+    if(c!=QColor::Invalid)
+        translatioColor=c;
+
+    ui->textEdit_trans->setTextColor(c);
+    ui->textEdit_trans->setText(ui->textEdit_trans->toPlainText());
+
+    setSizeTrans(translationFontSize);
+
+
+}
+void MainWindow::createPages()
+{
+    int p1,p2,indexsore=1,indexaye=1;
+    Page *temp=new Page();
+    QList<Aye*> ayesP1,ayesP2,tempaye;
+    Sore *tempsore;
+    Aye *ayetemp;
+    for(int i=1;i<=302;i++){
+        if(i!=1){
+            p1=i*2-1;
+            p2=i*2;
+        }
+        else if(i==1){
+            p1=1;
+            p2=2;
+
+        }
+
+//        for(indexsore=indexsore;indexsore<=allQuran->count();indexsore++){
+
+if(p1==187)
+    qDebug()<<" ";
+        tempsore=allQuran->value(indexsore);
+            tempaye=tempsore->getAye();
+            for(indexaye=indexaye;indexaye<=tempaye.count()+1;indexaye++){
+
+
+                if(indexaye>tempaye.count()){
+                    if(indexsore==114){
+                        temp->setAyePages(ayesP1,ayesP2);
+                        temp->setNumber(i);
+
+                        ayesP1=QList<Aye*>();
+                        ayesP2=QList<Aye*>();
+                        pages.append(temp);
+                        break;
+                    }
+                    indexsore++;
+                    indexaye=1;
+                    tempsore=allQuran->value(indexsore);
+                    tempaye=tempsore->getAye();
+
+
+                }
+                ayetemp=tempaye.at(indexaye-1);
+                if(ayetemp->getPage()>p2){
+                    temp->setAyePages(ayesP1,ayesP2);
+                    temp->setNumber(i);
+
+                    ayesP1=QList<Aye*>();
+                    ayesP2=QList<Aye*>();
+                    pages.append(temp);
+                    temp=new Page();
+                    break;
+                }
+
+
+                if(ayetemp->getPage()==p1){
+                    ayesP1.append(tempaye.at(indexaye-1));
+
+                }
+                else if(ayetemp->getPage()==p2){
+                    ayesP2.append(tempaye.at(indexaye-1));
+                }
+
+
+
+            }
+
+        //}
+
+
+    }
+
+
+
+
+}
+
+void MainWindow::createJuzList()
+{
+    juzList=new QList<Aye*>();
+    QMap<int, QMap<QString, int> > list=db->getJuz();
+    QMap<QString, int> temp;
+
+
+    for(int i=1;i<=list.count();i++){
+        temp=list.value(i);
+        juzList->append(allQuran->value(temp.value("sore"))->getAye().at(temp.value("aye")));
+    }
+
+}
+
+void MainWindow::createBookmarkList()
+{
+    QList<BookmarkInfo> b=db->getBookmarks();
+
+    bookmarks=new QList<Aye*>();
+
+    BookmarkInfo tmp;
+    for(int i=0;i<b.count();i++){
+        tmp=b.at(i);
+        if(tmp.getSore()!=1 && tmp.getSore()!=9)
+            bookmarks->append(allQuran->value(tmp.getSore())->getAye().at(tmp.getAye()));
+        else
+            bookmarks->append(allQuran->value(tmp.getSore())->getAye().at(tmp.getAye()-1));
+    }
+
+}
+
+void MainWindow::setCentrMainWindow()
+{
+        window=new QMainWindow(this);
+
+        window->setMinimumSize(0,0);
+        window->setParent(this);
+        ui->graphicsView->setParent(window);
+        ui->graphicsView->setMinimumSize(0,0);
+
+        window->setCentralWidget(ui->graphicsView);
+        QVBoxLayout *verlay=new QVBoxLayout(window);
+        window->setLayout(verlay);
+        ui->verticalLayout_mianwindow->addWidget(window);
+
+
+
+        ui->dockWidget_sound_2->setTitleBarWidget(new QWidget);
+}
+
+void MainWindow::setDockToCenterMainWindow(Qt::DockWidgetArea dc1,Qt::DockWidgetArea dc2)
+{
+    ui->dock_bookmark_2->setParent(window);
+    window->addDockWidget(dc1,ui->dock_bookmark_2);
+
+    ui->dock_trans->setParent(window);
+    window->addDockWidget(dc2,ui->dock_trans);
+
+    if(dc1==Qt::BottomDockWidgetArea && dc2==Qt::BottomDockWidgetArea)
+        window->tabifyDockWidget(ui->dock_trans,ui->dock_bookmark_2);
+}
+
+void MainWindow::refereshScenePage()
+{
+    scenePage->deleteLater();
+    scenePage=new ScenePage(ui->graphicsView);
+    scenePage->setHiddenPage(hiddenPage);
+    ui->graphicsView->setScene(scenePage);
+
+    connect(scenePage,SIGNAL(itemClicked(int,int)),this,SLOT(clickedAye(int,int)));
+    connect(scenePage,SIGNAL(bookmarkUpdate(int,int,QString)),this,
+            SLOT(bookmarkHandle(int,int,QString)));
+    connect(scenePage,SIGNAL(bookmarkUpdate(int,int,QString)),
+            ui->treeWidget_index,SLOT(changeBackgroundColor(int,int,QString)));
+}
+
+void MainWindow::setComboSoundPanelItem()
+{
+
+    pageCombo->clear();
+    soreCombo->clear();
+    juzCombo->clear();
+
+    for(int i=0;i<pages.count();i++){
+        pageCombo->addItem(QString::number(pages.at(i)->getNumPage1()),i);
+        pageCombo->addItem(QString::number(pages.at(i)->getNumPage2()),i);
+    }
+    for(int i=1;i<=allQuran->count();i++){
+        soreCombo->addItem(allQuran->value(i)->getName(),allQuran->value(i)->getNumber());
+    }
+
+
+    for(int i=0;i<juzList->count();i++){
+        juzCombo->addItem(QString::number(juzList->at(i)->getJuz()),i);
+    }
+
+    setComboAyeItem();
+    setComboQaryItem();
+}
+
+void MainWindow::setComboAyeItem()
+{
+    combosChanged=true;
+
+    ayeCombo->clear();
+    QList<Aye*> a=allQuran->value(currentSore)->getAye();
+    for(int i=0;i<a.count();i++)
+        ayeCombo->addItem(QString::number(a.at(i)->getVerse()));
+
+    combosChanged=false;
+}
+
+void MainWindow::setComboQaryItem()
+{
+    combosChanged=true;
+    int currentIndex=qaryCombo->currentIndex();
+    if(currentIndex==-1)
+        currentIndex=0;
+    qaryCombo->clear();
+    for(int i=0;i<qary->count();i++){
+        qaryCombo->addItem(qary->at(i)->getName(),i);
+    }
+
+    qaryCombo->setCurrentIndex(currentIndex);
+
+    combosChanged=false;
+}
+
+void MainWindow::setComboLangSearch()
+{
+    ui->comboBox_lang_search->addItems(QStringList(langTransList->keys()));
+    setComboTransSearch(ui->comboBox_lang_search->currentText());
+}
+
+void MainWindow::setComboLangBookmark()
+{
+    ui->comboBox_lang_book->addItems(QStringList(langTransList->keys()));
+    setComboTransBookmark(ui->comboBox_lang_book->currentText());
+}
+
+void MainWindow::setComboFilterIndex()
+{
+    ui->comboBox_filter_index->clear();
+    ui->comboBox_filter_index->addItem(Language::translate("All"));
+    ui->comboBox_filter_index->addItem(QIcon(":/rec/green.png"),Language::translate("green"));
+    ui->comboBox_filter_index->addItem(QIcon(":/rec/yellow.png"),Language::translate("yellow"));
+    ui->comboBox_filter_index->addItem(QIcon(":/rec/red.png"),Language::translate("red"));
+}
+
+void MainWindow::setComboFilterBookmark()
+{
+    ui->comboBox_filter_book->clear();
+    ui->comboBox_filter_book->addItem(Language::translate("All"));
+    ui->comboBox_filter_book->addItem(QIcon(":/rec/green.png"),Language::translate("green"));
+    ui->comboBox_filter_book->addItem(QIcon(":/rec/yellow.png"),Language::translate("yellow"));
+    ui->comboBox_filter_book->addItem(QIcon(":/rec/red.png"),Language::translate("red"));
+}
+
+void MainWindow::updateCombos()
+{
+    combosChanged=true;
+
+    pageCombo->setCurrentText(QString::number(currentAyeOBJ->getPage()));
+    soreCombo->setCurrentText(currentAyeOBJ->getSoreName());
+    setComboAyeItem();
+    combosChanged=true;
+    ayeCombo->setCurrentText(QString::number(currentAyeOBJ->getVerse()));
+    juzCombo->setCurrentText(QString::number(currentAyeOBJ->getJuz()));
+
+
+    combosChanged=false;
+}
+
+void MainWindow::setCurrentStates(Aye *a)
+{
+    currentAyeOBJ=a;
+    currentAye=a->getVerse();
+    currentSore=a->getChapter();
+    currentJuz=a->getJuz();
+
+    if(a->getPage()==1 || a->getPage()==2)
+        currentPage=1;
+    else
+        currentPage=(a->getPage()+1)/2;
+
+}
+
+void MainWindow::setSoreProperty()
+{
+    Sore *s=allQuran->value(currentSore);
+    ui->groupBox_sorePrperty->setTitle(Language::translate("soreProperty"));
+    ui->label_name_property->setText(Language::translate("name")+":  "+s->getName());
+    ui->label_number_property->setText(Language::translate("number")+":  "+QString::number(s->getNumber()));
+    ui->label_numAye_property->setText(Language::translate("ayeNumber")+":  "+QString::number(s->getAye().count()));
+
+
+}
+
+
+
+void MainWindow::doAllWork()
+{
+
+
+    refereshScenePage();
+    scenePage->paintPage(pages.at(currentPage-1),currentAyeOBJ->getAyeInTwoPage());
+    playSound();
+    showTranslation();
+    updateCombos();
+    setSoreProperty();
+    setGraphicViewScrollPoint();
+
+}
+
+void MainWindow::setGraphicViewScrollPoint()
+{
+
+    //QScrollBar *hsc=ui->graphicsView->horizontalScrollBar();
+   // QScrollBar *vsc=ui->graphicsView->verticalScrollBar();
+
+
+        AyeCordinate cord=currentAyeOBJ->getCordinate().at(0);
+//ui->graphicsView->width();
+scenePage->width();
+       // qDebug()<<"gvw "<<scenePage->width()-ui->graphicsView->width()<<endl;
+        //qDebug()<<"gvh "<<scenePage->height()-ui->graphicsView->height()<<endl;
+
+
+        ui->graphicsView->horizontalScrollBar()->setValue(cord.getXb()/1.1);
+        ui->graphicsView->verticalScrollBar()->setValue(cord.getyb()/1.1);
+}
+
+void MainWindow::nextPage()
+{
+    currentPage++;
+    if(currentPage>pages.count())
+        currentPage=1;
+
+    setCurrentStates(pages.at(currentPage-1)->getAyesPage().at(0));
+
+    doAllWork();
+
+}
+
+
+//for pre aye when current ayePage==1 and prePage execute
+void MainWindow::prePage(int ayePage)
+{
+    currentPage--;
+    if(currentPage<1)
+        currentPage=pages.count();
+
+
+    if(ayePage==1)
+        setCurrentStates(pages.at(currentPage-1)->getAyesPage().first());//scenePage->paintPage(pages.at(currentPage-1),ayePage);
+    else
+        setCurrentStates(pages.at(currentPage-1)->getAyesPage().last());//scenePage->paintPage(pages.at(currentPage-1),pages.at(currentPage-1)->getNumAye());
+
+
+    doAllWork();
+}
+
+void MainWindow::prePage()
+{
+    currentPage--;
+    if(currentPage<1)
+        currentPage=pages.count();
+
+
+   setCurrentStates(pages.at(currentPage-1)->getAyesPage().first());//scenePage->paintPage(pages.at(currentPage-1),ayePage);
+
+
+
+    doAllWork();
+}
+
+void MainWindow::nextAye()
+{
+    Aye *a;
+
+    if(currentSore!=1 && currentSore!=9){
+        a=allQuran->value(currentSore)->getAye().at(currentAye);
+    }
+    else{
+        a=allQuran->value(currentSore)->getAye().at(currentAye-1);
+    }
+
+    if(a->getAyeInTwoPage()==pages.at(currentPage-1)->getNumAye()){
+        nextPage();
+    }
+    else{
+
+        if(a->getVerse()==allQuran->value(currentSore)->getAye().last()->getVerse()){
+            if(currentSore==114)
+                currentSore=1;
+            else
+                currentSore++;
+
+            currentAye=allQuran->value(currentSore)->getAye().first()->getVerse();
+        }
+        else
+            currentAye=a->getVerse()+1;
+
+        if(currentSore!=1 && currentSore!=9){
+            setCurrentStates(allQuran->value(currentSore)->getAye().at(currentAye));
+        }
+        else{
+            setCurrentStates(allQuran->value(currentSore)->getAye().at(currentAye-1));
+        }
+
+        doAllWork();
+
+    }
+}
+
+void MainWindow::nextSore()
+{
+
+    if(currentSore==allQuran->keys().last())
+        currentSore=allQuran->keys().first();
+    else
+        currentSore++;
+
+
+    setCurrentStates(allQuran->value(currentSore)->getAye().at(0));
+
+    doAllWork();
+
+}
+
+void MainWindow::preSore()
+{
+    if(currentSore==allQuran->keys().first())
+        currentSore=allQuran->keys().last();
+    else
+        currentSore--;
+
+
+    setCurrentStates(allQuran->value(currentSore)->getAye().at(0));
+
+    doAllWork();
+}
+
+
+void MainWindow::preAye()
+{
+
+    Aye *a;
+
+    if(currentSore!=1 && currentSore!=9){
+        a=allQuran->value(currentSore)->getAye().at(currentAye);
+    }
+    else{
+        a=allQuran->value(currentSore)->getAye().at(currentAye-1);
+    }
+
+    if(a->getAyeInTwoPage()==1){
+        prePage(2);
+    }
+    else{
+
+
+        if(a->getVerse()==allQuran->value(currentSore)->getAye().at(0)->getVerse()){
+            if(currentSore==1)
+                currentSore=114;
+            else
+                currentSore--;
+
+            currentAye=allQuran->value(currentSore)->getAye().last()->getVerse();
+        }
+        else{
+            currentAye=a->getVerse()-1;
+        }
+
+        if(currentSore!=1 && currentSore!=9)
+            setCurrentStates(allQuran->value(currentSore)->getAye().at(currentAye));
+        else
+            setCurrentStates(allQuran->value(currentSore)->getAye().at(currentAye-1));
+
+
+        doAllWork();
+
+    }
+}
+
+void MainWindow::zoomPlus()
+{
+    ui->graphicsView->scale(1.2,1.2);
+}
+
+void MainWindow::zoomMinus()
+{
+    ui->graphicsView->scale(0.8,0.8);
+}
+
+void MainWindow::clapsToolbar()
+{
+    if(ui->mainToolBar->toolButtonStyle()==Qt::ToolButtonIconOnly){
+
+        ui->btn_claps->setIcon(QIcon(":/rec/1437317677_chevron-up.ico"));
+        ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+    }
+    else{
+        ui->btn_claps->setIcon(QIcon(":/rec/1437317694_chevron-down.ico"));
+        ui->mainToolBar->setToolButtonStyle(Qt::ToolButtonIconOnly);
+
+        }
+}
+
+
+
+void MainWindow::setSoundPanelDirection()
+{
+
+    ui->combosLayout->removeWidget(pageCombo);
+    ui->combosLayout->removeWidget(pageComboLabel);
+    ui->combosLayout->removeWidget(soreCombo);
+    ui->combosLayout->removeWidget(soreComboLabel);
+    ui->combosLayout->removeWidget(ayeCombo);
+    ui->combosLayout->removeWidget(ayeComboLabel);
+    ui->combosLayout->removeWidget(juzCombo);
+    ui->combosLayout->removeWidget(juzComboLabel);
+    ui->combosLayout->removeWidget(qaryCombo);
+    ui->combosLayout->removeWidget(qaryComboLabel);
+
+    ui->horizontalLayout_repeat->removeWidget(ui->spinBox_numRpeat);
+    ui->horizontalLayout_repeat->removeWidget(ui->label_numRepeat);
+
+    ui->gridLayout_volum->removeWidget(ui->label_volum);
+    ui->gridLayout_volum->removeWidget(ui->slider_volum);
+    ui->gridLayout_volum->removeItem(ui->spacer_volum);
+    if(direction==Qt::RightToLeft){
+        ui->combosLayout->addWidget(pageComboLabel,0,1);
+        ui->combosLayout->addWidget(pageCombo,0,0);
+
+        ui->combosLayout->addWidget(soreComboLabel,1,1);
+        ui->combosLayout->addWidget(soreCombo,1,0);
+
+        ui->combosLayout->addWidget(ayeComboLabel,2,1);
+        ui->combosLayout->addWidget(ayeCombo,2,0);
+
+        ui->combosLayout->addWidget(juzComboLabel,3,1);
+        ui->combosLayout->addWidget(juzCombo,3,0);
+
+        ui->combosLayout->addWidget(qaryComboLabel,4,1);
+        ui->combosLayout->addWidget(qaryCombo,4,0);
+
+        ui->horizontalLayout_repeat->addWidget(ui->spinBox_numRpeat);
+        ui->horizontalLayout_repeat->addWidget(ui->label_numRepeat);
+
+        ui->gridLayout_volum->addWidget(ui->slider_volum,0,0);
+        ui->gridLayout_volum->addWidget(ui->label_volum,0,1);
+        ui->gridLayout_volum->addItem(ui->spacer_volum,0,3);
+    }
+    else if(direction==Qt::LeftToRight){
+        ui->combosLayout->addWidget(pageComboLabel,0,0);
+        ui->combosLayout->addWidget(pageCombo,0,1);
+
+        ui->combosLayout->addWidget(soreComboLabel,1,0);
+        ui->combosLayout->addWidget(soreCombo,1,1);
+
+        ui->combosLayout->addWidget(ayeComboLabel,2,0);
+        ui->combosLayout->addWidget(ayeCombo,2,1);
+
+        ui->combosLayout->addWidget(juzComboLabel,3,0);
+        ui->combosLayout->addWidget(juzCombo,3,1);
+
+        ui->combosLayout->addWidget(qaryComboLabel,4,0);
+        ui->combosLayout->addWidget(qaryCombo,4,1);
+
+        ui->horizontalLayout_repeat->addWidget(ui->label_numRepeat);
+        ui->horizontalLayout_repeat->addWidget(ui->spinBox_numRpeat);
+
+        ui->gridLayout_volum->addWidget(ui->label_volum,0,0);
+        ui->gridLayout_volum->addWidget(ui->slider_volum,0,1);
+        ui->gridLayout_volum->addItem(ui->spacer_volum,0,3);
+    }
+}
+
+
+
+
+void MainWindow::clickedAye(const int sore,const int ayeSore)
+{
+
+    if(sore!=1 && sore!=9)
+        setCurrentStates(allQuran->value(sore)->getAye().at(ayeSore));
+    else
+        setCurrentStates(allQuran->value(sore)->getAye().at(ayeSore-1));
+
+    doAllWork();
+
+}
+
+
+
+
+
+
+void MainWindow::on_pushButton_nextpage_clicked()
+{
+    nextPage();
+}
+
+void MainWindow::on_pushButton_previouspage_clicked()
+{
+    prePage();
+}
+
+
+
+
+
+void MainWindow::handlePageCombo(const int index)
+{
+
+    handleCombosSoundPanel(Global::comboPage,index);
+
+}
+
+void MainWindow::handleSoreCombo(const int index)
+{
+
+    handleCombosSoundPanel(Global::comboSore,index);
+
+}
+
+void MainWindow::handleAyeCombo(const int index)
+{
+
+    handleCombosSoundPanel(Global::comboAye,index);
+
+}
+
+void MainWindow::handleJuzCombo(const int index)
+{
+
+    handleCombosSoundPanel(Global::comboJuz,index);
+
+}
+
+void MainWindow::handleQaryCombo(const int index)
+{
+    if(!combosChanged){
+        currentQary=qary->at(index);
+        playSound();
+    }
+}
+
+void MainWindow::handleAddQary(Qary *q)
+{
+
+
+    setComboQaryItem();
+
+    Thread::getGlobalThread()->setFunc(&Database::updateQary,q,Global::SaveQary,Global::DBQaryThreadOP);
+    Thread::getGlobalThread()->start();
+}
+
+void MainWindow::handleEditQary(Qary *q)
+{
+    setComboQaryItem();
+
+    Thread::getGlobalThread()->setFunc(&Database::updateQary,q,Global::UpdateQary,Global::DBQaryThreadOP);
+    Thread::getGlobalThread()->start();
+}
+
+void MainWindow::handleDeleteQary(Qary *q)
+{
+    for(int i=0;i<qary->count();i++){
+        if(QString::compare(qary->at(i)->getName(),q->getName())==0){
+            delete qary->at(i);
+            qary->removeAt(i);
+        }
+    }
+    setComboQaryItem();
+
+    Thread::getGlobalThread()->setFunc(&Database::updateQary,q,Global::DeleteQary,Global::DBQaryThreadOP);
+    Thread::getGlobalThread()->start();
+
+
+}
+
+void MainWindow::handleLanguageSetting(QString l)
+{
+    Language::setCurrentLanguage(l);
+    direction=Language::getDirection();
+
+
+
+    setSoundPanelDirection();
+    setTranslateWidget();
+
+    setComboFilterIndex();
+    setComboFilterBookmark();
+
+    setSoreProperty();
+    setTextWidgets();
+
+    setting->setTextWidgets();
+    downloadControl->setTextWidgets();
+
+}
+
+void MainWindow::setRangeMainSlider(int d)
+{
+
+    ui->horizontalSlider_Main->setRange(0,d);
+
+}
+
+void MainWindow::playSound()
+{
+
+    if(playerState==Global::BookmarkPlay)
+        player->stop();
+    playerState=Global::NormalPlay;
+    setPlayerSound();
+
+    if(!player->isStop()){
+        player->stop();
+        player->play();
+    }
+}
+
+void MainWindow::stopedSound()
+{
+
+    ui->pushButton_playStop->setText(Language::translate("play"));
+    ui->pushButton_pausePlay->setEnabled(false);
+    ui->pushButton_pausePlay->setText(Language::translate("pause"));
+
+    //tskPause->setEnabled(false);
+    //tskPlay->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+    ui->horizontalSlider_Main->setEnabled(false);
+}
+
+void MainWindow::setPlayerSound()
+{
+
+    QString dir;
+    if(QString::compare(currentQary->getType(),"dir")==0)
+        dir=currentQary->getDir();
+    else
+        dir="Audio//"+currentQary->getDir();
+
+    if(currentSore!=1 && currentSore!=9)
+        soundPath=dir+"//"+allQuran->value(currentSore)->getAye().at(currentAye)->getAudio();
+    else
+        soundPath=dir+"//"+allQuran->value(currentSore)->getAye().at(currentAye-1)->getAudio();
+    soundPath=soundPath+".mp3";
+
+    player->setSoundPath(soundPath);
+
+
+    QDir d(dir);
+    if(!d.exists(dir))
+        QDir().mkpath(dir);
+
+    if(!QFile::exists(soundPath) && QString::compare(currentQary->getType(),"dir")!=0){
+        //threadFunc->setFunc(&downloadSound);
+
+        downloadSound();
+    }
+    else
+        downloader->report("");
+
+
+}
+
+void MainWindow::endSoundHandle()
+{
+    if(playerState==Global::BookmarkPlay){
+        player->stop();
+        playerState=Global::NormalPlay;
+
+        endBookmarkPlay();
+    }
+    else if(playerState==Global::NormalPlay){
+        if(repeatState==Global::NoRepeat)
+            nextAye();
+
+        else if(repeatState==Global::PageRepeat){
+            if(currentAyeOBJ->getPage()%2==0){
+                if(currentAyeOBJ->getAyeInTwoPage()==pages.at(currentPage-1)->getNumAye())
+                    setCurrentStates(pages.at(currentPage-1)->
+                                     getAyesPage().at(pages.at(currentPage-1)->getNumAyePage1()));
+                else
+                    setCurrentStates(pages.at(currentPage-1)->getAyesPage().at(currentAyeOBJ->getAyeInTwoPage()));//شماره آیه قبلی میشه ایندکس بعدی
+
+                doAllWork();
+
+            }
+            else{
+
+                if(currentAyeOBJ->getAyePage()==pages.at(currentPage-1)->getNumAyePage1())
+                    setCurrentStates(pages.at(currentPage-1)->
+                                     getAyesPage().at(0));
+                else
+                    setCurrentStates(pages.at(currentPage-1)->getAyesPage().at(currentAyeOBJ->getAyeInTwoPage()));//شماره آیه قبلی میشه ایندکس بعدی
+
+                doAllWork();
+            }
+        }
+
+
+        else if(repeatState==Global::LimitRepeat){
+            if(counterRepeat<numRepeat){
+                counterRepeat++;
+                doAllWork();
+            }
+            else if(counterRepeat==numRepeat){
+                counterRepeat=0;
+                nextAye();
+            }
+        }
+
+        else if(repeatState==Global::InfinityRepeat){
+            doAllWork();
+        }
+    }
+
+
+}
+
+void MainWindow::handlePlayerPosition(int v)
+{
+    if(playerState==Global::NormalPlay)
+        ui->horizontalSlider_Main->setValue(v);
+}
+
+void MainWindow::handleChangeValueMainSlider(int v)
+{
+    if(playerState==Global::NormalPlay)
+        player->setPosition(v);
+}
+
+
+
+void MainWindow::handleCombosSoundPanel(Global::combosSignals cs, int index)
+{
+
+
+    if(cs==Global::comboPage && !combosChanged){
+
+        int ayeInTwoPage;
+        currentPage=pageCombo->itemData(index).toInt()+1;
+
+        if(pageCombo->itemText(index).toInt()%2==0)
+            ayeInTwoPage=pages.at(currentPage-1)->getNumAyePage1()+1;
+        else
+            ayeInTwoPage=1;
+        setCurrentStates(pages.at(currentPage-1)->getAyesPage().at(ayeInTwoPage-1));
+
+        doAllWork();
+
+    }
+    else if(cs==Global::comboSore && !combosChanged){
+
+
+        int ayeInCombo=ayeCombo->currentText().toInt();
+
+        currentSore=soreCombo->itemData(index).toInt();
+
+        if(allQuran->value(currentSore)->getAye().count()>ayeInCombo && ayeInCombo>0){
+            if(currentSore!=1 && currentSore!=9)
+                setCurrentStates(allQuran->value(currentSore)->getAye().at(ayeInCombo));
+            else
+                setCurrentStates(allQuran->value(currentSore)->getAye().at(ayeInCombo-1));
+        }
+        else
+            setCurrentStates(allQuran->value(currentSore)->getAye().at(0));
+        setComboAyeItem();
+
+
+
+        doAllWork();
+
+    }
+
+    else if(cs==Global::comboAye && !combosChanged){
+        combosChanged=true;
+        currentAye=ayeCombo->currentText().toInt();
+        if(currentSore!=1 && currentSore!=9)
+            setCurrentStates(allQuran->value(currentSore)->getAye().at(currentAye));
+        else
+        setCurrentStates(allQuran->value(currentSore)->getAye().at(currentAye-1));
+
+        doAllWork();
+
+    }
+    else if(cs==Global::comboJuz && !combosChanged){
+
+
+        setCurrentStates(juzList->at(juzCombo->itemData(index).toInt()));
+
+        doAllWork();
+
+    }
+
+
+}
+
+
+
+
+void MainWindow::on_pushButton_playStop_clicked()
+{
+
+    if(player->isStop() || playerState==Global::BookmarkPlay){
+        if(playerState==Global::BookmarkPlay)
+            emit endBookmarkPlay();
+
+        playerState=Global::NormalPlay;
+        setPlayerSound();
+        player->play();
+        ui->pushButton_playStop->setText(Language::translate("stop"));
+        ui->pushButton_pausePlay->setEnabled(true);
+
+        //tskPause->setEnabled(true);
+        //tskPlay->setIcon(style()->standardIcon(QStyle::SP_MediaStop));
+
+        ui->horizontalSlider_Main->setEnabled(true);
+    }
+    else if(player->isPause() || player->isPlay()){
+        player->stop();
+        stopedSound();
+    }
+
+}
+
+void MainWindow::on_pushButton_pausePlay_clicked()
+{
+    if(player->isPlay()){
+        player->pause();
+        ui->pushButton_pausePlay->setText(Language::translate("play"));
+
+        //tskPause->setIcon(style()->standardIcon(QStyle::SP_MediaPlay));
+    }
+    else if(player->isPause()){
+        player->play();
+        ui->pushButton_pausePlay->setText(Language::translate("pause"));
+
+        //tskPause->setIcon(style()->standardIcon(QStyle::SP_MediaPause));
+    }
+}
+
+
+
+
+void MainWindow::on_horizontalSlider_Main_sliderMoved(int position)
+{
+    player->setPosition(position);
+}
+
+
+
+void MainWindow::on_checkBox_pageRepeat_clicked(bool checked)
+{
+    if(checked){
+        repeatState=Global::PageRepeat;
+        ui->checkBox_infinityRepeat->setChecked(false);
+        ui->checkBox_limitRepeat->setChecked(false);
+        ui->spinBox_numRpeat->setEnabled(false);
+    }
+    else{
+        repeatState=Global::NoRepeat;
+    }
+}
+
+void MainWindow::on_checkBox_infinityRepeat_clicked(bool checked)
+{
+    if(checked){
+        repeatState=Global::InfinityRepeat;
+        ui->checkBox_pageRepeat->setChecked(false);
+        ui->checkBox_limitRepeat->setChecked(false);
+        ui->spinBox_numRpeat->setEnabled(false);
+    }
+    else{
+        repeatState=Global::NoRepeat;
+    }
+}
+
+void MainWindow::on_checkBox_limitRepeat_clicked(bool checked)
+{
+    if(checked){
+        repeatState=Global::LimitRepeat;
+        numRepeat=ui->spinBox_numRpeat->value();
+        counterRepeat=0;
+        ui->spinBox_numRpeat->setEnabled(true);
+        ui->checkBox_pageRepeat->setChecked(false);
+        ui->checkBox_infinityRepeat->setChecked(false);
+    }
+    else{
+        repeatState=Global::NoRepeat;
+        ui->spinBox_numRpeat->setEnabled(false);
+    }
+}
+
+void MainWindow::on_spinBox_numRpeat_valueChanged(int arg1)
+{
+    numRepeat=arg1;
+}
+
+
+
+void MainWindow::downloadSound()
+{
+    QList<DownloadInfo*> list;
+
+    if(playerState==Global::BookmarkPlay){
+        list.append(new DownloadInfoQuran(currentQary,bookmarkPlaying));
+        downloader->addDownload(list);
+    }
+    else if(downloadStat==Global::DownloadAye){
+        if(currentSore!=1 && currentSore!=9)
+            list.append(new DownloadInfoQuran(currentQary,allQuran->value(currentSore)->getAye().at(currentAye)));
+        else
+            list.append(new DownloadInfoQuran(currentQary,allQuran->value(currentSore)->getAye().at(currentAye-1)));
+        downloader->addDownload(list);
+    }
+    else if(downloadStat==Global::DownloadPage){
+        downloader->addDownload(createDownloadPageList());
+    }
+    else if(downloadStat==Global::DownloadSore){
+        downloader->addDownload(createDownloadSoreList());
+    }
+    else if(downloadStat==Global::downloadOff){
+        downloader->report("downloadOff");
+    }
+}
+
+
+
+
+
+QList<DownloadInfo *> MainWindow::createDownloadPageList()
+{
+    QList<DownloadInfo *> list;
+    QList<Aye*> a=pages.at(currentPage-1)->getAyesPage();
+
+    for(int i=0;i<a.count();i++){
+        list.append(new DownloadInfoQuran(currentQary,a.at(i)));
+        if(QFile::exists(list.last()->getSavePath()))
+            list.removeLast();
+    }
+
+    return list;
+}
+
+QList<DownloadInfo *> MainWindow::createDownloadSoreList()
+{
+    QList<DownloadInfo *> list;
+    QList<Aye*> a=allQuran->value(currentSore)->getAye();
+
+    for(int i=0;i<a.count();i++){
+        list.append(new DownloadInfoQuran(currentQary,a.at(i)));
+        if(QFile::exists(list.last()->getSavePath()))
+            list.removeLast();
+    }
+
+    return list;
+}
+
+void MainWindow::handleDownloadedFile(DownloadInfo *d)
+{
+
+//    Aye *a=downloadedFile->getAye();
+//    Qary *q=downloadedFile->getQary();
+
+//    if(QString::compare(q->getName(),currentQary->getName())==0,
+//            currentAyeOBJ->getChapter()==a->getChapter(),
+//            currentAyeOBJ->getVerse()==a->getVerse() )
+//    {
+
+    if(QString::compare(d->getSavePath(),soundPath)==0)
+        doAllWork();
+   // }
+
+    //delete downloadedFile;
+}
+
+void MainWindow::setDownloadState(Global::DownloadState s)
+{
+    downloadStat=s;
+}
+
+void MainWindow::bookmarkHandle(int sore, int aye, QString color)
+{
+
+
+
+    Aye *a=isExistBookmark(sore,aye);
+
+    if(a==NULL){
+        if(QString::compare(color,"delete")!=0){
+
+            if(sore!=9 && sore!=1)
+                a=allQuran->value(sore)->getAye().at(aye);
+            else
+                a=allQuran->value(sore)->getAye().at(aye-1);
+            a->setColor(color);
+
+            bookmarks->append(a);
+
+            Thread::getGlobalThread()->setFunc(&Database::updateBookmark,a,
+                                               Global::SaveBookmark,Global::DBBookMarkThreadOP);
+            Thread::getGlobalThread()->start();
+
+        }
+
+
+    }
+    else{
+        if(QString::compare(color,"delete")==0){
+            bookmarks->removeOne(a);
+            a->setColor("blue");
+
+            Thread::getGlobalThread()->setFunc(&Database::updateBookmark,a,
+                                               Global::DeleteBookmark,Global::DBBookMarkThreadOP);
+            Thread::getGlobalThread()->start();
+        }
+
+        else{
+            a->setColor(color);
+            Thread::getGlobalThread()->setFunc(&Database::updateBookmark,a,
+                                               Global::UpdateBookmark,Global::DBBookMarkThreadOP);
+            Thread::getGlobalThread()->start();
+        }
+
+
+
+    }
+    ui->tableWidget_bookmark->showBookmark();
+
+    doAllWork();
+}
+
+void MainWindow::itemsClickHandle(Aye *a)
+{
+    setCurrentStates(a);
+    doAllWork();
+}
+
+
+
+void MainWindow::playBookmark(Aye *a)
+{
+    if(player->isPlay() && playerState==Global::BookmarkPlay)
+    {
+
+        if(a->getChapter()==bookmarkPlaying->getChapter()
+                && a->getVerse()==bookmarkPlaying->getVerse()){
+            player->stop();
+
+            emit endBookmarkPlay();
+        }
+        else{
+            playerState=Global::BookmarkPlay;
+            player->stop();
+            stopedSound();
+
+            bookmarkPlaying=a;
+
+            QString dir;
+            if(QString::compare(currentQary->getType(),"dir")==0)
+                dir=currentQary->getDir();
+            else
+                dir="Audio//"+currentQary->getDir();
+
+            if(bookmarkPlaying->getChapter()!=1 && bookmarkPlaying->getChapter()!=9)
+                soundPath=dir+"//"+allQuran->value(bookmarkPlaying->getChapter())->getAye().at(bookmarkPlaying->getVerse())->getAudio();
+            else
+                soundPath=dir+"//"+allQuran->value(bookmarkPlaying->getChapter())->getAye().at(bookmarkPlaying->getVerse()-1)->getAudio();
+            soundPath=soundPath+".mp3";
+            player->setSoundPath(soundPath);
+
+            if(QFile::exists(soundPath))
+                player->play();
+            else if(QString::compare(currentQary->getType(),"dir")!=0){
+                downloadSound();
+
+                playerState=Global::NormalPlay;
+                emit endBookmarkPlay();
+            }
+        }
+    }
+    else{
+        playerState=Global::BookmarkPlay;
+        player->stop();
+        stopedSound();
+
+        bookmarkPlaying=a;
+
+        QString dir;
+        if(QString::compare(currentQary->getType(),"dir")==0)
+            dir=currentQary->getDir();
+        else
+            dir="Audio//"+currentQary->getDir();
+
+        if(bookmarkPlaying->getChapter()!=1 && bookmarkPlaying->getChapter()!=9)
+            soundPath=dir+"//"+allQuran->value(bookmarkPlaying->getChapter())->getAye().at(bookmarkPlaying->getVerse())->getAudio();
+        else
+            soundPath=dir+"//"+allQuran->value(bookmarkPlaying->getChapter())->getAye().at(bookmarkPlaying->getVerse()-1)->getAudio();
+        soundPath=soundPath+".mp3";
+        player->setSoundPath(soundPath);
+
+        if(QFile::exists(soundPath))
+            player->play();
+        else if(QString::compare(currentQary->getType(),"dir")!=0){
+            downloadSound();
+
+            playerState=Global::NormalPlay;
+            emit endBookmarkPlay();
+        }
+    }
+
+
+
+}
+
+Aye* MainWindow::isExistBookmark(int sore, int aye)
+{
+    for(int i=0;i<bookmarks->count();i++){
+        if(bookmarks->at(i)->getChapter()==sore && bookmarks->at(i)->getVerse()==aye)
+            return bookmarks->at(i);
+    }
+
+    return NULL;
+}
+
+
+void MainWindow::on_btn_setting_triggered()
+{
+
+    setting->show();
+
+}
+
+
+
+
+void MainWindow::on_toolButton_download_clicked()
+{
+    downloadControl->show();
+}
+
+
+void MainWindow::on_lineEdit_textChanged(const QString &arg1)
+{
+    ui->treeWidget_search->search(arg1);
+}
+
+void MainWindow::on_lineEdit_search_index_textChanged(const QString &arg1)
+{
+    ui->treeWidget_index->search(arg1);
+    ui->comboBox_filter_index->setCurrentIndex(0);
+}
+
+
+void MainWindow::getExport(QList<Aye *> list, QString fileName,QString lang,QString trans)
+{
+
+
+     if(list.count()!=0){
+
+
+             QFile file(fileName+".rtf");
+             if(!file.exists()){
+                 file.open(QIODevice::WriteOnly);
+                 QTextStream text(&file);
+                 text.setCodec("UTF-8");
+                 text.setFieldAlignment(QTextStream::AlignRight);
+
+                 for(int i=0;i<list.count();i++){
+
+                     text<<list.at(i)->getSoreName()<<"   "<<list.at(i)->getVerse();
+                     text<<"\r\n"<<list.at(i)->getText();
+                     if(QString::compare(lang,"")!=0)
+                         text<<"\r\n"<<Database::getTranslation(lang,trans,list.at(i));
+
+                     text<<"\r\n\r\n";
+                 }
+
+             file.close();
+             }
+
+             else{
+                 qDebug()<<"Ffff";
+             }
+     }
+}
+
+
+
+void MainWindow::on_pushButton_export_search_clicked()
+{
+    QFileDialog fd;
+    fd.setAcceptMode(QFileDialog::AcceptSave);
+    QString fileName=fd.getSaveFileName();
+    if(!fileName.isEmpty()){
+        if(ui->checkBox_langTrans_search->isChecked())
+        Thread::getGlobalThread()->setFunc(getExport,ui->treeWidget_search->getSearchResult()
+                                           ,fileName,ui->comboBox_lang_search->currentText()
+                                           ,ui->comboBox_trans_search->currentText(),Global::Export);
+        else
+            Thread::getGlobalThread()->setFunc(getExport,ui->treeWidget_search->getSearchResult()
+                                               ,fileName,"","",Global::Export);
+        Thread::getGlobalThread()->start();
+    }
+
+}
+
+void MainWindow::on_pushButton_export_book_clicked()
+{
+    QString filter=Language::deTranslate(ui->comboBox_filter_book->currentText());
+    QList<Aye*> exportList;
+    if(QString::compare(filter,"All")==0)
+        exportList=*bookmarks;
+    else{
+        for(int i=0;i<bookmarks->count();i++)
+            if(QString::compare(bookmarks->at(i)->getColor(),filter)==0)
+                exportList.append(bookmarks->at(i));
+    }
+
+    QFileDialog fd;
+    fd.setAcceptMode(QFileDialog::AcceptSave);
+    QString fileName=fd.getSaveFileName();
+    if(!fileName.isEmpty()){
+        if(ui->checkBox_langTrans_book->isChecked())
+        Thread::getGlobalThread()->setFunc(getExport,exportList
+                                           ,fileName,ui->comboBox_lang_book->currentText()
+                                           ,ui->comboBox_trans_book->currentText(),Global::Export);
+        else
+            Thread::getGlobalThread()->setFunc(getExport,exportList
+                                               ,fileName,"","",Global::Export);
+        Thread::getGlobalThread()->start();
+    }
+}
+
+void MainWindow::on_checkBox_langTrans_search_clicked(bool checked)
+{
+    if(checked){
+        ui->comboBox_lang_search->setEnabled(true);
+        ui->comboBox_trans_search->setEnabled(true);
+    }
+    else{
+        ui->comboBox_lang_search->setEnabled(false);
+        ui->comboBox_trans_search->setEnabled(false);
+    }
+}
+
+void MainWindow::on_toolButton_aye_next_clicked()
+{
+    nextAye();
+}
+
+void MainWindow::on_toolButton_forward_clicked()
+{
+    player->forward();
+}
+
+void MainWindow::on_toolButton_backward_clicked()
+{
+    player->backward();
+}
+
+void MainWindow::on_toolButton_pre_aye_clicked()
+{
+    preAye();
+}
+
+
+
+
+// move volum slider by wheel of mouse
+void MainWindow::wheelEvent(QWheelEvent *event){
+    if(event->angleDelta().y()<0 && ui->slider_volum->value()>0){
+        ui->slider_volum->setValue(ui->slider_volum->value()-1);
+    }
+    else if(event->angleDelta().y()>0 && ui->slider_volum->value()<100){
+        ui->slider_volum->setValue(ui->slider_volum->value()+1);
+    }
+}
+
+void MainWindow::closeEvent(QCloseEvent *e){
+
+    saveSetting();
+
+    close();
+}
+
+void MainWindow::on_pushButton_zoom_plus_clicked()
+{
+    zoomPlus();
+}
+
+void MainWindow::on_pushButton_zoom_minus_clicked()
+{
+    zoomMinus();
+}
+
+void MainWindow::on_btn_claps_triggered()
+{
+    clapsToolbar();
+
+}
+
+void MainWindow::on_btn_index_triggered(bool checked)
+{
+    if(checked)
+        ui->dockWidget_index_2->setHidden(false);
+    else
+        ui->dockWidget_index_2->setHidden(true);
+}
+
+void MainWindow::on_btn_translate_triggered(bool checked)
+{
+    if(checked)
+        ui->dock_trans->setHidden(false);
+    else
+        ui->dock_trans->setHidden(true);
+}
+
+void MainWindow::on_btn_search_triggered(bool checked)
+{
+    if(checked)
+        ui->dockWidget_search_2->setHidden(false);
+    else
+        ui->dockWidget_search_2->setHidden(true);
+}
+
+void MainWindow::on_btn_bookmark_triggered(bool checked)
+{
+    if(checked)
+        ui->dock_bookmark_2->setHidden(false);
+    else
+        ui->dock_bookmark_2->setHidden(true);
+}
+
+
+
+void MainWindow::on_checkBox_langTrans_book_clicked(bool checked)
+{
+    if(checked){
+        ui->comboBox_lang_book->setEnabled(true);
+        ui->comboBox_trans_book->setEnabled(true);
+    }
+    else{
+        ui->comboBox_lang_book->setEnabled(false);
+        ui->comboBox_trans_book->setEnabled(false);
+    }
+}
+
+
+
+
+void MainWindow::on_comboBox_filter_index_currentTextChanged(const QString &arg1)
+{
+    ui->treeWidget_index->showItemsByFilter(Language::deTranslate(arg1));
+}
+
+
+
+void MainWindow::on_pushButton_hidden_clicked()
+{
+    refereshScenePage();
+    if(hiddenPage){
+        hiddenPage=false;
+        scenePage->setHiddenPage(false);
+        ui->pushButton_hidden->setText(Language::translate("hidden"));
+    }
+    else{
+        hiddenPage=true;
+        scenePage->setHiddenPage(true);
+        ui->pushButton_hidden->setText(Language::translate("noHidden"));
+    }
+
+    scenePage->paintPage(pages.at(currentPage-1),currentAyeOBJ->getAyeInTwoPage());
+}
+
+
+
+
+void MainWindow::setShortcuts()
+{
+
+    //index and bookmark set on designer
+
+
+    QShortcut *nextPageShortcut=new QShortcut(Qt::Key_Right,this);
+    QShortcut *prevPageShortcut=new QShortcut(Qt::Key_Left,this);
+    QShortcut *tenNextPageShortcut=new QShortcut(Qt::CTRL+Qt::Key_Right,this);
+    QShortcut *tenPrevPageShortcut=new QShortcut(Qt::CTRL+Qt::Key_Left,this);
+    QShortcut *nextAyeShortcut=new QShortcut(Qt::Key_Down,this);
+    QShortcut *prevAyeShortcut=new QShortcut(Qt::Key_Up,this);
+//    QShortcut *tenNextAyeShortcut=new QShortcut(Qt::CTRL+Qt::Key_Down,this);
+//    QShortcut *tenPrevAyeShortcut=new QShortcut(Qt::CTRL+Qt::Key_Up,this);
+
+    QShortcut *fullScreenShortcut=new QShortcut(Qt::Key_F,this);
+    QShortcut *noFullScreenShortcut=new QShortcut(Qt::Key_Escape,this);
+    QShortcut *showSettingShortcut=new QShortcut(Qt::CTRL+Qt::Key_P,this);
+    QShortcut *stopAudioShortcut=new QShortcut(Qt::Key_0,this);
+    QShortcut *pauseAndPlaySettingShortcut=new QShortcut(Qt::Key_Space,this);
+
+    QShortcut *nextSoreShortcut=new QShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_Right,this);
+    QShortcut *preSoreShortcut=new QShortcut(Qt::CTRL+Qt::SHIFT+Qt::Key_Left,this);
+
+
+
+
+    connect(nextPageShortcut,SIGNAL(activated()),this,SLOT(nextPage()));
+    connect(prevPageShortcut,SIGNAL(activated()),this,SLOT(prePage()));
+    connect(tenNextPageShortcut,SIGNAL(activated()),this,SLOT(activeTenNextPageShortcut()));
+    connect(tenPrevPageShortcut,SIGNAL(activated()),this,SLOT(activeTenPrevPageShortcut()));
+    connect(fullScreenShortcut,SIGNAL(activated()),this,SLOT(activeFullScreenShortcut()));
+    connect(noFullScreenShortcut,SIGNAL(activated()),this,SLOT(showMaximized()));
+    connect(pauseAndPlaySettingShortcut,SIGNAL(activated()),this,SLOT(on_pushButton_pausePlay_clicked()));
+    connect(stopAudioShortcut,SIGNAL(activated()),this,SLOT(on_pushButton_playStop_clicked()));
+    connect(nextAyeShortcut,SIGNAL(activated()),this,SLOT(nextAye()));
+    connect(prevAyeShortcut,SIGNAL(activated()),this,SLOT(preAye()));
+
+    connect(showSettingShortcut,SIGNAL(activated()),this,SLOT(on_btn_setting_triggered()));
+
+    connect(nextSoreShortcut,SIGNAL(activated()),this,SLOT(nextSore()));
+    connect(preSoreShortcut,SIGNAL(activated()),this,SLOT(preSore()));
+
+
+}
+
+
+void MainWindow::activeFullScreenShortcut(){
+    if(isFullScreen())
+        showMaximized();
+    else
+        showFullScreen();
+}
+
+
+void MainWindow::activeTenNextPageShortcut(){
+    for(int i=0;i<10;i++){
+        currentPage++;
+        if(currentPage>pages.count())
+            currentPage=1;
+    }
+
+
+    setCurrentStates(allQuran->value(currentSore)->getAye().at(0));
+
+    doAllWork();
+}
+
+void MainWindow::activeTenPrevPageShortcut(){
+    for(int i=10;i>0;i--){
+        currentPage--;
+        if(currentPage<1)
+            currentPage=pages.count();
+    }
+    scenePage->paintPage(pages.at(currentPage-1),1);
+}
+
+
+void MainWindow::setTextWidgets(){
+    this->setWindowTitle(Language::translate("abyaz"));
+    pageComboLabel->setText(Language::translate("page"));
+    soreComboLabel->setText(Language::translate("sore"));
+    ayeComboLabel->setText(Language::translate("aye"));
+    qaryComboLabel->setText(Language::translate("qary"));
+    juzComboLabel->setText(Language::translate("juz"));
+
+    ui->label_volum->setText(Language::translate("volume"));
+    ui->label_numRepeat->setText(Language::translate("numReapeat"));
+
+    ui->checkBox_infinityRepeat->setText(Language::translate("infinityRepeat"));
+    ui->checkBox_limitRepeat->setText(Language::translate("limitRepeat"));
+    ui->checkBox_pageRepeat->setText(Language::translate("pageRepeat"));
+
+    ui->pushButton_hidden->setText(Language::translate("hidden"));
+    ui->pushButton_nextpage->setText(Language::translate("nextPage"));
+    ui->pushButton_previouspage->setText(Language::translate("previousPage"));
+
+    if(player->isPlay()){
+        ui->pushButton_pausePlay->setText(Language::translate("pause"));
+        ui->pushButton_playStop->setText(Language::translate("stop"));
+    }
+    else if(player->isPause()){
+        ui->pushButton_pausePlay->setText(Language::translate("play"));
+        ui->pushButton_playStop->setText(Language::translate("stop"));
+    }
+    else if(player->isStop()){
+        ui->pushButton_pausePlay->setText(Language::translate("pause"));
+        ui->pushButton_playStop->setText(Language::translate("play"));
+    }
+
+
+    ui->dockWidget_index_2->setWindowTitle(Language::translate("index"));
+    ui->dockWidget_search_2->setWindowTitle(Language::translate("search"));
+    ui->dock_bookmark_2->setWindowTitle(Language::translate("bookmark"));
+    ui->dock_trans->setWindowTitle(Language::translate("translation"));
+
+
+    ui->pushButton_export_search->setText(Language::translate("export"));
+    ui->checkBox_langTrans_search->setText(Language::translate("translation"));
+    ui->groupBox_search->setTitle(Language::translate("export"));
+
+    ui->pushButton_export_book->setText(Language::translate("export"));
+    ui->checkBox_langTrans_book->setText(Language::translate("translation"));
+
+
+
+    label_trans_lang->setText(Language::translate("language"));
+    label_trans_trans->setText(Language::translate("translator"));
+    label_trans_size->setText(Language::translate("size"));
+    button_trans_color->setText(Language::translate("color"));
+
+
+    ui->btn_bookmark->setText(Language::translate("bookmark"));
+    ui->btn_claps->setText(Language::translate("claps"));
+    ui->btn_exit->setText(Language::translate("exit"));
+    ui->btn_help->setText(Language::translate("help"));
+    ui->btn_index->setText(Language::translate("index"));
+    ui->btn_search->setText(Language::translate("search"));
+    ui->btn_setting->setText(Language::translate("setting"));
+    ui->btn_translate->setText(Language::translate("translation"));
+
+
+    ui->label_download->setText(Language::translate(Language::deTranslate(ui->label_download->text())));
+
+
+}

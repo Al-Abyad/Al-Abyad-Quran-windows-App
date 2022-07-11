@@ -1,0 +1,670 @@
+<RCC>
+    <qresource prefix="/">
+        <file>rec/_0031_Tools.png</file>
+        <file>rec/0514_MRT.png</file>
+        <file>rec/0517_MRT.png</file>
+        <file>rec/0536_MRT.png</file>
+        <file>rec/970.png</file>
+        <file>rec/1047_MRT.png</file>
+        <file>rec/1436806373_system-help.ico</file>
+        <file>rec/1437317677_chevron-up.ico</file>
+        <file>rec/1437317694_chevron-down.ico</file>
+        <file>rec/1437317838_exit.ico</file>
+        <file>rec/accessories_text_editor.ico</file>
+        <file>rec/app.ico</file>
+        <file>rec/app.png</file>
+        <file>rec/aye.png</file>
+        <file>rec/delete.png</file>
+        <file>rec/downloading.gif</file>
+        <file>rec/exit-icon.png</file>
+        <file>rec/filesave.png</file>
+        <file>rec/filteradd.png</file>
+        <file>rec/filterdelete.png</file>
+        <file>rec/five_back.jpg</file>
+        <file>rec/five_forward.jpg</file>
+        <file>rec/FRONT_BACK_PSD_01.jpg</file>
+        <file>rec/green.png</file>
+        <file>rec/kuran.png</file>
+        <file>rec/Next.png</file>
+        <file>rec/next_aye.jpg</file>
+        <file>rec/next-icon.png</file>
+        <file>rec/play.png</file>
+        <file>rec/Previous.png</file>
+        <file>rec/previous_aye.jpg</file>
+        <file>rec/previous-icon.png</file>
+        <file>rec/red.png</file>
+        <file>rec/search.png</file>
+        <file>rec/sore.png</file>
+        <file>rec/yellow.png</file>
+        <file>rec/font/IRANSans.ttf</file>
+        <file>rec/font/IRANSans_Bold.ttf</file>
+        <file>rec/font/IRANSans_Light.ttf</file>
+        <file>rec/font/IRANSans_Medium.ttf</file>
+        <file>rec/font/IRANSans_UltraLight.ttf</file>
+        <file>rec/icon 64/3D_view.png</file>
+        <file>rec/icon 64/anchor.png</file>
+        <file>rec/icon 64/audio1.png</file>
+        <file>rec/icon 64/audio2.png</file>
+        <file>rec/icon 64/audio3.png</file>
+        <file>rec/icon 64/award.png</file>
+        <file>rec/icon 64/badge.png</file>
+        <file>rec/icon 64/bell.png</file>
+        <file>rec/icon 64/book2.png</file>
+        <file>rec/icon 64/book3.png</file>
+        <file>rec/icon 64/bookmark1.png</file>
+        <file>rec/icon 64/bookmark2.png</file>
+        <file>rec/icon 64/camera1.png</file>
+        <file>rec/icon 64/camera2.png</file>
+        <file>rec/icon 64/cassette.png</file>
+        <file>rec/icon 64/check.png</file>
+        <file>rec/icon 64/cloud2.png</file>
+        <file>rec/icon 64/compass.png</file>
+        <file>rec/icon 64/cone.png</file>
+        <file>rec/icon 64/cross.png</file>
+        <file>rec/icon 64/database.png</file>
+        <file>rec/icon 64/direction.png</file>
+        <file>rec/icon 64/download1.png</file>
+        <file>rec/icon 64/download2.png</file>
+        <file>rec/icon 64/download3.png</file>
+        <file>rec/icon 64/edit.png</file>
+        <file>rec/icon 64/eject1.png</file>
+        <file>rec/icon 64/eject2.png</file>
+        <file>rec/icon 64/email1.png</file>
+        <file>rec/icon 64/fast_forward.png</file>
+        <file>rec/icon 64/favorite.png</file>
+        <file>rec/icon 64/file.png</file>
+        <file>rec/icon 64/film1.png</file>
+        <file>rec/icon 64/film2.png</file>
+        <file>rec/icon 64/folder.png</file>
+        <file>rec/icon 64/gear1.png</file>
+        <file>rec/icon 64/gear2.png</file>
+        <file>rec/icon 64/grid_large_view.png</file>
+        <file>rec/icon 64/grid_small_view.png</file>
+        <file>rec/icon 64/hammer.png</file>
+        <file>rec/icon 64/help.png</file>
+        <file>rec/icon 64/key1.png</file>
+        <file>rec/icon 64/key2.png</file>
+        <file>rec/icon 64/lifebuoy.png</file>
+        <file>rec/icon 64/location1.png</file>
+        <file>rec/icon 64/location2.png</file>
+        <file>rec/icon 64/lock1.png</file>
+        <file>rec/icon 64/lock2.png</file>
+        <file>rec/icon 64/magnifier.png</file>
+        <file>rec/icon 64/magnifier_minus.png</file>
+        <file>rec/icon 64/magnifier_plus.png</file>
+        <file>rec/icon 64/microphone.png</file>
+        <file>rec/icon 64/minus.png</file>
+        <file>rec/icon 64/next1.png</file>
+        <file>rec/icon 64/next2.png</file>
+        <file>rec/icon 64/next3.png</file>
+        <file>rec/icon 64/pan.png</file>
+        <file>rec/icon 64/paperclip.png</file>
+        <file>rec/icon 64/pause.png</file>
+        <file>rec/icon 64/play.png</file>
+        <file>rec/icon 64/plus.png</file>
+        <file>rec/icon 64/previous1.png</file>
+        <file>rec/icon 64/previous3.png</file>
+        <file>rec/icon 64/quote1.png</file>
+        <file>rec/icon 64/quote2.png</file>
+        <file>rec/icon 64/refresh1.png</file>
+        <file>rec/icon 64/refresh2.png</file>
+        <file>rec/icon 64/refresh3.png</file>
+        <file>rec/icon 64/refresh4.png</file>
+        <file>rec/icon 64/resize3.png</file>
+        <file>rec/icon 64/resize4.png</file>
+        <file>rec/icon 64/resize5.png</file>
+        <file>rec/icon 64/rewind.png</file>
+        <file>rec/icon 64/save1.png</file>
+        <file>rec/icon 64/save2.png</file>
+        <file>rec/icon 64/share2.png</file>
+        <file>rec/icon 64/shield1.png</file>
+        <file>rec/icon 64/shield2.png</file>
+        <file>rec/icon 64/shield3.png</file>
+        <file>rec/icon 64/shuffle.png</file>
+        <file>rec/icon 64/speech_bubble1.png</file>
+        <file>rec/icon 64/speech_bubble4.png</file>
+        <file>rec/icon 64/suitcase2.png</file>
+        <file>rec/icon 64/user1.png</file>
+        <file>rec/icon 64/warning.png</file>
+        <file>rec/icon 64/wrench.png</file>
+        <file>rec/lang/english.xml</file>
+        <file>rec/lang/persian.xml</file>
+        <file>rec/64x64/3D_view.png</file>
+        <file>rec/64x64/anchor.png</file>
+        <file>rec/64x64/archive.png</file>
+        <file>rec/64x64/armchair.png</file>
+        <file>rec/64x64/audio_file.png</file>
+        <file>rec/64x64/audio1.png</file>
+        <file>rec/64x64/audio2.png</file>
+        <file>rec/64x64/audio3.png</file>
+        <file>rec/64x64/award.png</file>
+        <file>rec/64x64/baby_carriage.png</file>
+        <file>rec/64x64/badge.png</file>
+        <file>rec/64x64/bag1.png</file>
+        <file>rec/64x64/bag2.png</file>
+        <file>rec/64x64/bag3.png</file>
+        <file>rec/64x64/balloon.png</file>
+        <file>rec/64x64/bank.png</file>
+        <file>rec/64x64/banknote.png</file>
+        <file>rec/64x64/bar_chart1.png</file>
+        <file>rec/64x64/bar_chart2.png</file>
+        <file>rec/64x64/barrier.png</file>
+        <file>rec/64x64/baseball.png</file>
+        <file>rec/64x64/baseball_bat.png</file>
+        <file>rec/64x64/basket.png</file>
+        <file>rec/64x64/basketball.png</file>
+        <file>rec/64x64/bathroom.png</file>
+        <file>rec/64x64/battery1.png</file>
+        <file>rec/64x64/battery2.png</file>
+        <file>rec/64x64/battery3.png</file>
+        <file>rec/64x64/beach_ball.png</file>
+        <file>rec/64x64/bed.png</file>
+        <file>rec/64x64/beer.png</file>
+        <file>rec/64x64/behance.png</file>
+        <file>rec/64x64/bell.png</file>
+        <file>rec/64x64/binoculars.png</file>
+        <file>rec/64x64/biofuel.png</file>
+        <file>rec/64x64/blogger.png</file>
+        <file>rec/64x64/bodysuits.png</file>
+        <file>rec/64x64/bonfire.png</file>
+        <file>rec/64x64/book1.png</file>
+        <file>rec/64x64/book2.png</file>
+        <file>rec/64x64/book3.png</file>
+        <file>rec/64x64/bookmark1.png</file>
+        <file>rec/64x64/bookmark2.png</file>
+        <file>rec/64x64/books1.png</file>
+        <file>rec/64x64/books2.png</file>
+        <file>rec/64x64/bottle_of_water.png</file>
+        <file>rec/64x64/bow.png</file>
+        <file>rec/64x64/bowling.png</file>
+        <file>rec/64x64/box1.png</file>
+        <file>rec/64x64/box2.png</file>
+        <file>rec/64x64/boy.png</file>
+        <file>rec/64x64/brick_wall.png</file>
+        <file>rec/64x64/brightness.png</file>
+        <file>rec/64x64/brush.png</file>
+        <file>rec/64x64/burger.png</file>
+        <file>rec/64x64/bus.png</file>
+        <file>rec/64x64/cabinet.png</file>
+        <file>rec/64x64/calculator.png</file>
+        <file>rec/64x64/calendar1.png</file>
+        <file>rec/64x64/calendar2.png</file>
+        <file>rec/64x64/calendar3.png</file>
+        <file>rec/64x64/camera1.png</file>
+        <file>rec/64x64/camera2.png</file>
+        <file>rec/64x64/candle.png</file>
+        <file>rec/64x64/candy1.png</file>
+        <file>rec/64x64/candy2.png</file>
+        <file>rec/64x64/car.png</file>
+        <file>rec/64x64/cardiogram.png</file>
+        <file>rec/64x64/carousel.png</file>
+        <file>rec/64x64/cassette.png</file>
+        <file>rec/64x64/celsius_degree.png</file>
+        <file>rec/64x64/certificate1.png</file>
+        <file>rec/64x64/certificate2.png</file>
+        <file>rec/64x64/check.png</file>
+        <file>rec/64x64/christmas_ball.png</file>
+        <file>rec/64x64/clipboard1.png</file>
+        <file>rec/64x64/clipboard2.png</file>
+        <file>rec/64x64/cloud1.png</file>
+        <file>rec/64x64/cloud2.png</file>
+        <file>rec/64x64/cloud3.png</file>
+        <file>rec/64x64/cloudy1.png</file>
+        <file>rec/64x64/cloudy2.png</file>
+        <file>rec/64x64/coffee.png</file>
+        <file>rec/64x64/compass.png</file>
+        <file>rec/64x64/cone.png</file>
+        <file>rec/64x64/cook.png</file>
+        <file>rec/64x64/copy.png</file>
+        <file>rec/64x64/credit_card.png</file>
+        <file>rec/64x64/crib.png</file>
+        <file>rec/64x64/croissant.png</file>
+        <file>rec/64x64/cross.png</file>
+        <file>rec/64x64/crutch.png</file>
+        <file>rec/64x64/cup.png</file>
+        <file>rec/64x64/cup_of_tea.png</file>
+        <file>rec/64x64/cupboard.png</file>
+        <file>rec/64x64/cut.png</file>
+        <file>rec/64x64/cutting_board.png</file>
+        <file>rec/64x64/dashboard.png</file>
+        <file>rec/64x64/database.png</file>
+        <file>rec/64x64/delicious.png</file>
+        <file>rec/64x64/desk.png</file>
+        <file>rec/64x64/details_small_view.png</file>
+        <file>rec/64x64/deviantart.png</file>
+        <file>rec/64x64/diaper.png</file>
+        <file>rec/64x64/direction.png</file>
+        <file>rec/64x64/disc.png</file>
+        <file>rec/64x64/diving_mask.png</file>
+        <file>rec/64x64/dollar.png</file>
+        <file>rec/64x64/download1.png</file>
+        <file>rec/64x64/download2.png</file>
+        <file>rec/64x64/download3.png</file>
+        <file>rec/64x64/dress.png</file>
+        <file>rec/64x64/dribbble.png</file>
+        <file>rec/64x64/drop.png</file>
+        <file>rec/64x64/dumbbell.png</file>
+        <file>rec/64x64/ecology.png</file>
+        <file>rec/64x64/edit.png</file>
+        <file>rec/64x64/eject1.png</file>
+        <file>rec/64x64/eject2.png</file>
+        <file>rec/64x64/electric_guitar.png</file>
+        <file>rec/64x64/email1.png</file>
+        <file>rec/64x64/email2.png</file>
+        <file>rec/64x64/euro.png</file>
+        <file>rec/64x64/eye1.png</file>
+        <file>rec/64x64/eye2.png</file>
+        <file>rec/64x64/facebook.png</file>
+        <file>rec/64x64/fahrenheit_degree.png</file>
+        <file>rec/64x64/fast_forward.png</file>
+        <file>rec/64x64/faucet.png</file>
+        <file>rec/64x64/favorite.png</file>
+        <file>rec/64x64/favorite_minus.png</file>
+        <file>rec/64x64/favorite_plus.png</file>
+        <file>rec/64x64/feeding_bottle.png</file>
+        <file>rec/64x64/fence.png</file>
+        <file>rec/64x64/file.png</file>
+        <file>rec/64x64/film1.png</file>
+        <file>rec/64x64/film2.png</file>
+        <file>rec/64x64/filter.png</file>
+        <file>rec/64x64/firework.png</file>
+        <file>rec/64x64/fir-tree.png</file>
+        <file>rec/64x64/flag.png</file>
+        <file>rec/64x64/flashlight.png</file>
+        <file>rec/64x64/flickr.png</file>
+        <file>rec/64x64/flower.png</file>
+        <file>rec/64x64/folder.png</file>
+        <file>rec/64x64/football.png</file>
+        <file>rec/64x64/forrst.png</file>
+        <file>rec/64x64/gamepad.png</file>
+        <file>rec/64x64/gas_station1.png</file>
+        <file>rec/64x64/gas_station2.png</file>
+        <file>rec/64x64/gear1.png</file>
+        <file>rec/64x64/gear2.png</file>
+        <file>rec/64x64/gender1.png</file>
+        <file>rec/64x64/gender2.png</file>
+        <file>rec/64x64/gift.png</file>
+        <file>rec/64x64/girl.png</file>
+        <file>rec/64x64/github.png</file>
+        <file>rec/64x64/globe.png</file>
+        <file>rec/64x64/goblet1.png</file>
+        <file>rec/64x64/goblet2.png</file>
+        <file>rec/64x64/googleplus.png</file>
+        <file>rec/64x64/graduate_cap.png</file>
+        <file>rec/64x64/grid_large_view.png</file>
+        <file>rec/64x64/grid_small_view.png</file>
+        <file>rec/64x64/hammer.png</file>
+        <file>rec/64x64/hand_grips.png</file>
+        <file>rec/64x64/hanger.png</file>
+        <file>rec/64x64/HD_video.png</file>
+        <file>rec/64x64/headphones.png</file>
+        <file>rec/64x64/helmet.png</file>
+        <file>rec/64x64/help.png</file>
+        <file>rec/64x64/home1.png</file>
+        <file>rec/64x64/home2.png</file>
+        <file>rec/64x64/hook-1.png</file>
+        <file>rec/64x64/hook2.png</file>
+        <file>rec/64x64/ice_cream.png</file>
+        <file>rec/64x64/icons.qrc</file>
+        <file>rec/64x64/imac.png</file>
+        <file>rec/64x64/image_file.png</file>
+        <file>rec/64x64/inbox1.png</file>
+        <file>rec/64x64/inbox2.png</file>
+        <file>rec/64x64/inbox3.png</file>
+        <file>rec/64x64/inbox4.png</file>
+        <file>rec/64x64/info.png</file>
+        <file>rec/64x64/instagram.png</file>
+        <file>rec/64x64/ipad.png</file>
+        <file>rec/64x64/iphone.png</file>
+        <file>rec/64x64/ipod.png</file>
+        <file>rec/64x64/jerry_can.png</file>
+        <file>rec/64x64/joystick.png</file>
+        <file>rec/64x64/juice.png</file>
+        <file>rec/64x64/key1.png</file>
+        <file>rec/64x64/key2.png</file>
+        <file>rec/64x64/kitchen_knife.png</file>
+        <file>rec/64x64/last_fm.png</file>
+        <file>rec/64x64/leaf.png</file>
+        <file>rec/64x64/lifebuoy.png</file>
+        <file>rec/64x64/like.png</file>
+        <file>rec/64x64/line_chart.png</file>
+        <file>rec/64x64/link1.png</file>
+        <file>rec/64x64/link2.png</file>
+        <file>rec/64x64/linkedin.png</file>
+        <file>rec/64x64/livejournal.png</file>
+        <file>rec/64x64/location1.png</file>
+        <file>rec/64x64/location2.png</file>
+        <file>rec/64x64/lock1.png</file>
+        <file>rec/64x64/lock2.png</file>
+        <file>rec/64x64/log_out.png</file>
+        <file>rec/64x64/macbook.png</file>
+        <file>rec/64x64/magnifier.png</file>
+        <file>rec/64x64/magnifier_minus.png</file>
+        <file>rec/64x64/magnifier_plus.png</file>
+        <file>rec/64x64/map1.png</file>
+        <file>rec/64x64/map2.png</file>
+        <file>rec/64x64/measuring_tape.png</file>
+        <file>rec/64x64/medal.png</file>
+        <file>rec/64x64/megaphone.png</file>
+        <file>rec/64x64/menu.png</file>
+        <file>rec/64x64/microphone.png</file>
+        <file>rec/64x64/microwave.png</file>
+        <file>rec/64x64/minus.png</file>
+        <file>rec/64x64/moon.png</file>
+        <file>rec/64x64/mouse.png</file>
+        <file>rec/64x64/multi_files.png</file>
+        <file>rec/64x64/myspace.png</file>
+        <file>rec/64x64/newspaper.png</file>
+        <file>rec/64x64/next1.png</file>
+        <file>rec/64x64/next2.png</file>
+        <file>rec/64x64/nipple.png</file>
+        <file>rec/64x64/note1.png</file>
+        <file>rec/64x64/note2.png</file>
+        <file>rec/64x64/notebook.png</file>
+        <file>rec/64x64/options.png</file>
+        <file>rec/64x64/pan.png</file>
+        <file>rec/64x64/paperclip.png</file>
+        <file>rec/64x64/parasol.png</file>
+        <file>rec/64x64/patch.png</file>
+        <file>rec/64x64/pause.png</file>
+        <file>rec/64x64/pen.png</file>
+        <file>rec/64x64/pencil.png</file>
+        <file>rec/64x64/pencil_ruler.png</file>
+        <file>rec/64x64/photo1.png</file>
+        <file>rec/64x64/photo2.png</file>
+        <file>rec/64x64/photo3.png</file>
+        <file>rec/64x64/picture1.png</file>
+        <file>rec/64x64/picture2.png</file>
+        <file>rec/64x64/picture3.png</file>
+        <file>rec/64x64/pie.png</file>
+        <file>rec/64x64/pie_chart1.png</file>
+        <file>rec/64x64/pie_chart2.png</file>
+        <file>rec/64x64/pill1.png</file>
+        <file>rec/64x64/pill2.png</file>
+        <file>rec/64x64/pin.png</file>
+        <file>rec/64x64/pinterest.png</file>
+        <file>rec/64x64/pizza.png</file>
+        <file>rec/64x64/plane.png</file>
+        <file>rec/64x64/play.png</file>
+        <file>rec/64x64/plus.png</file>
+        <file>rec/64x64/police_badge.png</file>
+        <file>rec/64x64/previous1.png</file>
+        <file>rec/64x64/previous2.png</file>
+        <file>rec/64x64/printer.png</file>
+        <file>rec/64x64/protein_supplement.png</file>
+        <file>rec/64x64/purse.png</file>
+        <file>rec/64x64/quote1.png</file>
+        <file>rec/64x64/quote2.png</file>
+        <file>rec/64x64/racket.png</file>
+        <file>rec/64x64/radiation.png</file>
+        <file>rec/64x64/radioactive_wastes.png</file>
+        <file>rec/64x64/rain.png</file>
+        <file>rec/64x64/rattle.png</file>
+        <file>rec/64x64/recording.png</file>
+        <file>rec/64x64/refresh1.png</file>
+        <file>rec/64x64/refresh2.png</file>
+        <file>rec/64x64/refresh3.png</file>
+        <file>rec/64x64/refresh4.png</file>
+        <file>rec/64x64/refrigerator.png</file>
+        <file>rec/64x64/resize1.png</file>
+        <file>rec/64x64/resize2.png</file>
+        <file>rec/64x64/resize3.png</file>
+        <file>rec/64x64/resize4.png</file>
+        <file>rec/64x64/resize5.png</file>
+        <file>rec/64x64/resize6.png</file>
+        <file>rec/64x64/resize7.png</file>
+        <file>rec/64x64/rewind.png</file>
+        <file>rec/64x64/rocket.png</file>
+        <file>rec/64x64/roller.png</file>
+        <file>rec/64x64/rolling-pin.png</file>
+        <file>rec/64x64/roulette.png</file>
+        <file>rec/64x64/rubber_duck.png</file>
+        <file>rec/64x64/rugby.png</file>
+        <file>rec/64x64/ruler.png</file>
+        <file>rec/64x64/safe.png</file>
+        <file>rec/64x64/salver.png</file>
+        <file>rec/64x64/sandwich.png</file>
+        <file>rec/64x64/saucepan.png</file>
+        <file>rec/64x64/save1.png</file>
+        <file>rec/64x64/save2.png</file>
+        <file>rec/64x64/scales.png</file>
+        <file>rec/64x64/screwdriver.png</file>
+        <file>rec/64x64/server.png</file>
+        <file>rec/64x64/share1.png</file>
+        <file>rec/64x64/share2.png</file>
+        <file>rec/64x64/shield1.png</file>
+        <file>rec/64x64/shield2.png</file>
+        <file>rec/64x64/shield3.png</file>
+        <file>rec/64x64/ship.png</file>
+        <file>rec/64x64/shoe1.png</file>
+        <file>rec/64x64/shoe2.png</file>
+        <file>rec/64x64/shop.png</file>
+        <file>rec/64x64/shopping_bag.png</file>
+        <file>rec/64x64/shopping_cart.png</file>
+        <file>rec/64x64/shorts.png</file>
+        <file>rec/64x64/shuffle.png</file>
+        <file>rec/64x64/shuttlecock.png</file>
+        <file>rec/64x64/sight.png</file>
+        <file>rec/64x64/signboard.png</file>
+        <file>rec/64x64/skirt.png</file>
+        <file>rec/64x64/skype.png</file>
+        <file>rec/64x64/sleet.png</file>
+        <file>rec/64x64/snowing.png</file>
+        <file>rec/64x64/soda.png</file>
+        <file>rec/64x64/sofa.png</file>
+        <file>rec/64x64/speech_bubble1.png</file>
+        <file>rec/64x64/speech_bubble2.png</file>
+        <file>rec/64x64/speech_bubble3.png</file>
+        <file>rec/64x64/speech_bubble4.png</file>
+        <file>rec/64x64/speech_bubble5.png</file>
+        <file>rec/64x64/steering_wheel.png</file>
+        <file>rec/64x64/stethoscope.png</file>
+        <file>rec/64x64/stop.png</file>
+        <file>rec/64x64/stopwatch.png</file>
+        <file>rec/64x64/storm.png</file>
+        <file>rec/64x64/stove.png</file>
+        <file>rec/64x64/subwoofer.png</file>
+        <file>rec/64x64/suit.png</file>
+        <file>rec/64x64/suitcase1.png</file>
+        <file>rec/64x64/suitcase2.png</file>
+        <file>rec/64x64/suitcase3.png</file>
+        <file>rec/64x64/suitcase4.png</file>
+        <file>rec/64x64/sunblock.png</file>
+        <file>rec/64x64/sunny.png</file>
+        <file>rec/64x64/syringe.png</file>
+        <file>rec/64x64/syrup.png</file>
+        <file>rec/64x64/table_tennis.png</file>
+        <file>rec/64x64/tag1.png</file>
+        <file>rec/64x64/tag2.png</file>
+        <file>rec/64x64/target.png</file>
+        <file>rec/64x64/taxi1.png</file>
+        <file>rec/64x64/taxi2.png</file>
+        <file>rec/64x64/teddy_bear.png</file>
+        <file>rec/64x64/tennis.png</file>
+        <file>rec/64x64/tent.png</file>
+        <file>rec/64x64/text_file.png</file>
+        <file>rec/64x64/thermometer1.png</file>
+        <file>rec/64x64/thermometer2.png</file>
+        <file>rec/64x64/tie.png</file>
+        <file>rec/64x64/time1.png</file>
+        <file>rec/64x64/time2.png</file>
+        <file>rec/64x64/time3.png</file>
+        <file>rec/64x64/toaster.png</file>
+        <file>rec/64x64/toolbox.png</file>
+        <file>rec/64x64/torte.png</file>
+        <file>rec/64x64/train.png</file>
+        <file>rec/64x64/trash.png</file>
+        <file>rec/64x64/truck.png</file>
+        <file>rec/64x64/T-shirt1.png</file>
+        <file>rec/64x64/T-shirt2.png</file>
+        <file>rec/64x64/tumblr.png</file>
+        <file>rec/64x64/TV_stand.png</file>
+        <file>rec/64x64/twitter.png</file>
+        <file>rec/64x64/umbrella.png</file>
+        <file>rec/64x64/upload1.png</file>
+        <file>rec/64x64/upload2.png</file>
+        <file>rec/64x64/usb.png</file>
+        <file>rec/64x64/user1.png</file>
+        <file>rec/64x64/user2.png</file>
+        <file>rec/64x64/user3.png</file>
+        <file>rec/64x64/user4.png</file>
+        <file>rec/64x64/video.png</file>
+        <file>rec/64x64/video_file.png</file>
+        <file>rec/64x64/vimeo.png</file>
+        <file>rec/64x64/vinyl_record.png</file>
+        <file>rec/64x64/vkontakte.png</file>
+        <file>rec/64x64/waiter.png</file>
+        <file>rec/64x64/warning.png</file>
+        <file>rec/64x64/washing_machine.png</file>
+        <file>rec/64x64/web_camera.png</file>
+        <file>rec/64x64/weight.png</file>
+        <file>rec/64x64/wind_turbine.png</file>
+        <file>rec/64x64/wine.png</file>
+        <file>rec/64x64/wireless.png</file>
+        <file>rec/64x64/wreath.png</file>
+        <file>rec/64x64/wrench.png</file>
+        <file>rec/64x64/wrench_screwdriver.png</file>
+        <file>rec/64x64/xing.png</file>
+        <file>rec/64x64/youtube.png</file>
+        <file>rec/icon 64/eject3.png</file>
+        <file>rec/icon/004_042_test_tube_laboratory_chemistry_lab_beake_biology_preparation_2.png</file>
+        <file>rec/icon/004_043_test_tube_laboratory_chemistry_lab_beake_biology_preparation_3.png</file>
+        <file>rec/icon/004_044_test_tube_laboratory_chemistry_lab_beake_biology_preparation_4.png</file>
+        <file>rec/icon/007_040_help_support_marine_nautical_lifebuoy_buoy_lifesaver.png</file>
+        <file>rec/icon/009_015_nature_ecology_sun_light_horizon_water_sea_ocean_shine_sunset.png</file>
+        <file>rec/icon/009_016_nature_ecology_sun_light_shine_sunset.png</file>
+        <file>rec/icon/014_060_add_product_crate_package_box_parcel_shipping_bundle_cargo.png</file>
+        <file>rec/icon/014_061_remove_delete_product_crate_package_box_parcel_shipping_bundle_cargo.png</file>
+        <file>rec/icon/014_062_remove_delete_product_crate_package_box_parcel_shipping_bundle_cargo_2.png</file>
+        <file>rec/icon/014_063_check_product_crate_package_box_parcel_shipping_bundle_cargo.png</file>
+        <file>rec/icon/014_068_favorite_product_crate_package_box_parcel_shipping_bundle_cargo.png</file>
+        <file>rec/icon/014_072_product_crate_package_box_parcel_shipping_bundle_cargo_2.png</file>
+        <file>rec/icon/019_002_book_read_history_bookmarks_education_journal_log_logbook.png</file>
+        <file>rec/icon/019_005_web_earth_globe_network_connection_internet_planet_3.png</file>
+        <file>rec/icon/019_006_star_favorite_achievement_award.png</file>
+        <file>rec/icon/019_007_heart_like_favorite_in_love.png</file>
+        <file>rec/icon/019_008_tag_price_bookmark.png</file>
+        <file>rec/icon/019_015_share_connect_connection_communication_network_export_link_5.png</file>
+        <file>rec/icon/019_047_box_archive.png</file>
+        <file>rec/icon/020_010_brightness_high_big_sun.png</file>
+        <file>rec/icon/020_011_volume_low_small_sound.png</file>
+        <file>rec/icon/020_012_volume_high_small_sound.png</file>
+        <file>rec/icon/020_013_volume_low_big_sound.png</file>
+        <file>rec/icon/020_014_volume_low_big_sound_2.png</file>
+        <file>rec/icon/020_015_volume_normal_big_sound.png</file>
+        <file>rec/icon/020_016_volume_high_big_sound.png</file>
+        <file>rec/icon/020_118_file_document_paper_page_sheet_horizontal_landscape.png</file>
+        <file>rec/icon/020_163_mail_box_mailbox_inbox_email_new.png</file>
+        <file>rec/icon/020_164_mail_box_mailbox_inbox_email_new_2.png</file>
+        <file>rec/icon/020_191_post_box_postage_postbox_mail_email_2.png</file>
+        <file>rec/icon/020_193_edit_write_reply_compose.png</file>
+        <file>rec/icon/020_194_note_file_text.png</file>
+        <file>rec/icon/020_197_log_script_file_document_sheet_page.png</file>
+        <file>rec/icon/020_198_log_script_file_document_sheet_page_text.png</file>
+        <file>rec/icon/020_202_calendar_date_schedule_event_month_year_history.png</file>
+        <file>rec/icon/020_206_book_bookmark_read_library.png</file>
+        <file>rec/icon/020_207_book_read_library.png</file>
+        <file>rec/icon/020_212_archive_documents_drawer_cabinet_open_files.png</file>
+        <file>rec/icon/020_214_book_read_history_bookmarks_education_journal_log_logbook_2.png</file>
+        <file>rec/icon/020_215_book_read_history_bookmarks_education_journal_log_logbook_3.png</file>
+        <file>rec/icon/020_223_bookmark_mark_favorite_link.png</file>
+        <file>rec/icon/020_224_newspaper_news_morning_events_journal.png</file>
+        <file>rec/icon/021_010_layout_view_roll_out.png</file>
+        <file>rec/icon/021_011_layout_view_expand.png</file>
+        <file>rec/icon/021_071_layout_view_thumbnails_cover_flow_vertical_2.png</file>
+        <file>rec/icon/021_109_layout_wireframe_grid_form_text_field_search.png</file>
+        <file>rec/icon/022_025_layers_front_copy_clone.png</file>
+        <file>rec/icon/022_053_design_graphic_filter_circles_intersection.png</file>
+        <file>rec/icon/022_055_design_layers_stack_arrange_levels.png</file>
+        <file>rec/icon/023_038_wrench_spanner_options_preferences_tool.png</file>
+        <file>rec/icon/023_039_wrench_spanner_options_preferences_tool_2.png</file>
+        <file>rec/icon/023_041_options_preferences_tune_tuning_screwdriver_wreck_tool.png</file>
+        <file>rec/icon/023_047_zoom_search_lense_tool_2.png</file>
+        <file>rec/icon/023_048_zoom_in_search_lense_tool.png</file>
+        <file>rec/icon/023_049_zoom_out_search_lense_tool.png</file>
+        <file>rec/icon/023_054_drill_perforator_tool.png</file>
+        <file>rec/icon/024_001_plus_more_add_open_circle_button.png</file>
+        <file>rec/icon/024_002_minus_close_turn_hide_delete_circle_button.png</file>
+        <file>rec/icon/024_003_delete_close_hide_circle_button.png</file>
+        <file>rec/icon/024_004_check_complete_alright_ok_tick_test_circle_button.png</file>
+        <file>rec/icon/024_005_down_arrow_next_bottom_end_circle_button.png</file>
+        <file>rec/icon/024_006_up_arrow_prev_previous_top_home_circle_button.png</file>
+        <file>rec/icon/024_007_right_next_end_arrow_circle_button.png</file>
+        <file>rec/icon/024_008_left_prev_previous_home_arrow_circle_button.png</file>
+        <file>rec/icon/024_009_question_ask_help_support_circle_button.png</file>
+        <file>rec/icon/024_010_info_information_circle_button.png</file>
+        <file>rec/icon/024_011_exclamation_attention_warning_circle_button.png</file>
+        <file>rec/icon/024_012_exclamation_attention_warning_triangle_button_sign.png</file>
+        <file>rec/icon/024_013_exclamation_attention_warning_octagon_button_sign.png</file>
+        <file>rec/icon/024_014_delete_lock_ban_prohibition_denied_octagon_button_sign.png</file>
+        <file>rec/icon/024_015_stop_ban_prohibition_denied_octagon_button_sign.png</file>
+        <file>rec/icon/024_016_ban_prohibition_embargo_crossed_circle_sign.png</file>
+        <file>rec/icon/024_017_active_turn_on_switch_tumbler_sign.png</file>
+        <file>rec/icon/024_020_play_button_circle.png</file>
+        <file>rec/icon/024_021_pause_button_circle.png</file>
+        <file>rec/icon/024_022_stop_button_circle.png</file>
+        <file>rec/icon/024_023_backward_rewind_prev_previous_button_circle.png</file>
+        <file>rec/icon/024_024_foward_rewind_next_button_circle.png</file>
+        <file>rec/icon/024_025_play.png</file>
+        <file>rec/icon/024_026_pause.png</file>
+        <file>rec/icon/024_027_stop.png</file>
+        <file>rec/icon/024_028_backward_rewind_prev_previous.png</file>
+        <file>rec/icon/024_029_foward_rewind_next.png</file>
+        <file>rec/icon/024_030_ejejct.png</file>
+        <file>rec/icon/024_031_plus_add_addition_more_cross.png</file>
+        <file>rec/icon/024_032_minus_substract.png</file>
+        <file>rec/icon/024_033_delete_close.png</file>
+        <file>rec/icon/024_034_check_tick_complete_alright_yes_ok.png</file>
+        <file>rec/icon/024_035_down_arrow_next_bottom_end.png</file>
+        <file>rec/icon/024_036_up_arrow_prev_previous_top_home.png</file>
+        <file>rec/icon/024_037_right_next_end_arrow.png</file>
+        <file>rec/icon/024_038_left_prev_previous_home_arrow.png</file>
+        <file>rec/icon/024_039_plus_add_addition_more_cross_open_square_button.png</file>
+        <file>rec/icon/024_040_minus_close_turn_hide_delete_square_button.png</file>
+        <file>rec/icon/024_044_rotate_clockwise_arrow_circle.png</file>
+        <file>rec/icon/024_045_rotate_clockwise_arrow_circle_2.png</file>
+        <file>rec/icon/024_046_rotate_clockwise_arrow_circle_3.png</file>
+        <file>rec/icon/024_047_rotate_clockwise_arrow_circle_4.png</file>
+        <file>rec/icon/024_062_left_arrow_2.png</file>
+        <file>rec/icon/024_063_right_arrow_2.png</file>
+        <file>rec/icon/024_064_up_arrow_2.png</file>
+        <file>rec/icon/024_065_down_arrow_2.png</file>
+        <file>rec/icon/024_066_home_arrow_start_rewind_2.png</file>
+        <file>rec/icon/024_067_end_arrow_finish_rewind_2.png</file>
+        <file>rec/icon/024_068_home_arrow_start_top_up_rewind_2.png</file>
+        <file>rec/icon/024_069_end_arrow_finish_down_bottom_rewind_2.png</file>
+        <file>rec/icon/024_084_scale_arrow_fullscreen_expand_zoom_2.png</file>
+        <file>rec/icon/024_085_scale_arrow_fullscreen_expand_zoom_collapse_2.png</file>
+        <file>rec/icon/024_086_move_left_right_up_down_arrow_navigate.png</file>
+        <file>rec/icon/024_089_consistently_play_mode_sign_arrow.png</file>
+        <file>rec/icon/024_090_repeat_loop_play_mode_sign_arrow.png</file>
+        <file>rec/icon/024_094_send_outcoming_outside_outut_exit_mail_arrow.png</file>
+        <file>rec/icon/024_097_send_outcoming_outside_mail_outut_exit_arrow_evacuate.png</file>
+        <file>rec/icon/024_098_download_arrow_sign.png</file>
+        <file>rec/icon/024_099_download_circle_button.png</file>
+        <file>rec/icon/024_100_refresh_update_sign_arrow.png</file>
+        <file>rec/icon/024_105_exit_quit_door_sign.png</file>
+        <file>rec/icon/024_106_enter_input_login_door_sign.png</file>
+        <file>rec/icon/024_114_shield_blazon_logo_sign.png</file>
+        <file>rec/icon/024_122_sticker_label_logo_sign_3.png</file>
+        <file>rec/icon/024_126_flag_banner_sign_2.png</file>
+        <file>rec/icon/024_127_bonus_action_polyhedron_star_sign.png</file>
+        <file>rec/icon/024_128_bonus_action_polyhedron_star_sign_2.png</file>
+        <file>rec/icon/024_129_bonus_action_polyhedron_star_sign_3.png</file>
+        <file>rec/icon/024_130_cicrcle_sign.png</file>
+        <file>rec/icon/024_131_cicrcle_logo_dotted_sign.png</file>
+        <file>rec/icon/024_132_cicrcle_logo_dotted_sign_2.png</file>
+        <file>rec/icon/024_133_cicrcle_radial_ray_logo_sign.png</file>
+        <file>rec/icon/024_134_enter_input_login_door_sign_2.png</file>
+        <file>rec/icon/024_135_exit_quit_door_sign_2.png</file>
+        <file>rec/icon/024_141_cancel_stop_cancellation_forbidden.png</file>
+        <file>rec/icon/024_142_peace_world_freedom_hippie_tree_pacifism_pacific.png</file>
+        <file>rec/icon/026_033_interior_stairs_floor_stage_level.png</file>
+        <file>rec/alabyad-splash.png</file>
+        <file>rec/reg.jpg</file>
+        <file>rec/icon.ico</file>
+        <file>rec/font/gandom/Gandom.ttf</file>
+        <file>rec/font/gandom/Gandom-Bold.ttf</file>
+        <file>rec/ALABYADDD2.png</file>
+    </qresource>
+</RCC>
