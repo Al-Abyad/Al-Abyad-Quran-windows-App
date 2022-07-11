@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+  <language author="" version="0.2.5">
+    <locale AUTHOR="" NAME="English" VERSION="Abyaz"  ID="en_US" />
+      <words>
+		<text id="Align" value="Left" />
+
+<!-- Main Words -->
+          
+		  <text id="abyaz" value="Al-Abyad" />
+		<text id="about" value="About" />
+		<text id="Abouttxt" value="Abouttxt" />
+		<text id="sound" value="Sound" />
+		<text id="search" value="Search" />
+		<text id="claps" value="Claps" />
+		<text id="bookmark" value="Bookmark" />
+		<text id="exit" value="Exit" />
+		<text id="help" value="Help" />
+		<text id="index" value="Index" />
+		<text id="register" value="Register" />
+		<text id="setting" value="Setting" />
+		<text id="translation" value="Translation" />
+		<text id="language" value="Language" />
+		<text id="translator" value="Translator" />
+		<text id="limitRepeat" value="Limited Repeat" />
+		<text id="pageRepeat" value="Page Repeat" />
+		<text id="stop" value="Stop" />
+		<text id="volume" value="Volume" />
+		<text id="numReapeat" value="Repeat Number" />
+		<text id="nextPage" value="Next" />
+		<text id="previousPage" value="Previous" />
+		
+		<text id="size" value="Size" />
+		<text id="color" value="Color" />
+		<text id="export" value="Export" />
+		<text id="play" value="Play" />
+		<text id="pause" value="Pause" />
+		<text id="Zoom In" value="Zoom In" />
+		<text id="Zoom Out" value="Zoom Out" />
+		<text id="soreProperty" value="Chapter Property" />
+		
+		<text id="sore" value="Chapter" />
+		<text id="aye" value="Verse" />
+		<text id="juz" value="Juz" />
+		<text id="page" value="Page" />
+		<text id="qary" value="Reader" />
+		<text id="grade" value="Grade" />
+		<text id="chapter" value="Chapter" />
+		<text id="verse" value="Verse" />
+		<text id="text" value="Text" />
+		<text id="green" value="Intermediate" />
+		<text id="yellow" value="Difficult" />
+		<text id="red" value="Very Difficult" />
+		<text id="name" value="Name" />
+		<text id="ayeNumber" value="Verse Number" />
+		<text id="number" value="Sore Number" />
+		<text id="addQary" value="Add Reader" />
+		<text id="chooseFolder" value="Choose Folder" />
+		<text id="delete" value="Delete" />
+		<text id="edit" value="Edit" />
+		<text id="download" value="Download" />
+		<text id="editQary" value="Edit Reader" />
+		<text id="dwnAye" value="Just Verse" />
+		<text id="dwnDeactive" value="Deactive" />
+		<text id="dwnPage" value="Page Download" />
+		<text id="dwnSore" value="Chapter Download" />
+		<text id="downloaded" value="Download Finished!" />
+		<text id="internetConnectionError" value="Internet Connection Problems!" />
+		<text id="serverError" value="Server Problems!" />
+		<text id="contentError" value="Content Problems!" />
+		<text id="downloading" value="Downloading..." />
+		<text id="hidden" value="Hidden" />
+		<text id="noHidden" value="Show" />
+		<text id="All" value="All" />
+		<text id="downloadOff" value="Download is Off!" />
+		<text id="add" value="Add" />
+		
+		<text id="infinityRepeat" value="Infinity Repeat" />
+
+                <text id="fullscreen" value="Fullscreen" />
+                <text id="read" value="Read" />
+
+                <text id="days" value="Days" />
+                <text id="ago" value="ago" />
+
+                <text id="copy" value="Copy" />
+				
+				<text id="from" value="From" />
+				<text id="to" value="To" />
+				<text id="examType" value="Exam Type" />
+				<text id="filter" value="Filter" />
+				
+				<text id="sound" value="Sound" />
+				<text id="text" value="Text" />
+				<text id="exam" value="Exam" />
+				
+				<text id="time" value="Time" />
+				<text id="readCount" value="Read Count" />
+				<text id="unclear" value="Unclear" />
+				<text id="today" value="Today" />
+				<text id="yesterday" value="Yesterday" />
+				
+				
+				<text id="shortcutGuide" value="Shortcuts Guide" />
+				
+				<text id="fazlSore" value="Virtues" />
+				<text id="barekatSore" value="Blessings" />
+				
+				<text id="numAye" value="Verse Number" />
+				<text id="nozol" value="Revelation Order" />
+				<text id="locNozol" value="Revelation Place" />
+				
+				<text id="makki" value="Makki" />
+				<text id="madani" value="Madani" />
+				
+				<text id="soreInfo" value="Chapter Information" />
+				
+				<text id="msg_resetExam" value="For start again , Click on Reset" />
+				
+				<text id="readExam" value="Read : " />
+				<text id="readPageExam" value="Read Page : " />
+				
+				<text id="contactUs" value="Contact" />
+				<text id="visitSite" value="Visit Website" />
+				<text id="userGuide" value="User Guide" />
+
+
+      </words>
+</language>

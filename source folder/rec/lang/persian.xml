@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+  <language author="" version="0.2.5">
+    <locale AUTHOR="" NAME="Persian" VERSION="Abyaz"  ID="en_US" />
+      <words>
+		<text id="Align" value="Right" />
+
+<!-- Main Words -->
+          
+		  <text id="abyaz" value="الابیض" />
+		<text id="about" value="درباره" />
+		<text id="Abouttxt" value="Abouttxt" />
+		<text id="sound" value="صوت" />
+		<text id="search" value="جستجو" />
+                <text id="claps" value="جمع کردن" />
+		<text id="bookmark" value="نشانه گذاری" />
+		<text id="exit" value="خروج" />
+		<text id="help" value="راهنما" />
+		<text id="index" value="فهرست" />
+		<text id="register" value="فعالسازی" />
+		<text id="setting" value="تنظیمات" />
+		<text id="translation" value="ترجمه" />
+		<text id="language" value="زبان" />
+		<text id="translator" value="مترجم" />
+		<text id="limitRepeat" value="تکرار محدود" />
+		<text id="pageRepeat" value="تکرار صفحه" />
+		<text id="stop" value="توقف" />
+		<text id="volume" value="صدا" />
+		<text id="numReapeat" value="تعداد تکرار" />
+		<text id="nextPage" value="بعدی" />
+		<text id="previousPage" value="قبلی" />
+		
+		<text id="size" value="سایز" />
+		<text id="color" value="رنگ" />
+		<text id="export" value="خروجی" />
+		<text id="play" value="پخش" />
+		<text id="pause" value="مکث" />
+		<text id="Zoom In" value="Zoom In" />
+		<text id="Zoom Out" value="Zoom Out" />
+		<text id="soreProperty" value="مشخصات سوره" />
+		
+		<text id="sore" value="سوره" />
+		<text id="aye" value="آیه" />
+		<text id="juz" value="جز" />
+		<text id="page" value="صفحه" />
+		<text id="qary" value="قاری" />
+		<text id="grade" value="درجه" />
+		<text id="text" value="متن" />
+		<text id="green" value="متوسط" />
+		<text id="yellow" value="سخت" />
+		<text id="red" value="خیلی سخت" />
+		<text id="name" value="نام" />
+		<text id="ayeNumber" value="تعداد آیه" />
+		<text id="number" value="شماره سوره" />
+		<text id="addQary" value="افزودن قاری" />
+		<text id="chooseFolder" value="انتخاب پوشه" />
+		<text id="delete" value="حذف" />
+		<text id="edit" value="ویرایش" />
+		<text id="download" value="دانلود" />
+		<text id="editQary" value="ویرایش قاری" />
+		<text id="dwnAye" value="فقط آیه" />
+		<text id="dwnDeactive" value="غیرفعال" />
+		<text id="dwnPage" value="دانلود صفحه" />
+		<text id="dwnSore" value="دانلود سوره" />
+		<text id="downloaded" value="دانلود تمام شد!" />
+		<text id="internetConnectionError" value="خطا در اتصال اینترنت!" />
+		<text id="serverError" value="خطای سرور!" />
+		<text id="contentError" value="خطا در محتوای دریافتی!" />
+		<text id="downloading" value="درحال دانلود..." />
+		<text id="hidden" value="مخفی" />
+		<text id="noHidden" value="نمایش" />
+		<text id="All" value="همه" />
+		<text id="downloadOff" value="دانلود غیرفعال است!" />
+		<text id="add" value="افزودن" />
+		
+		<text id="infinityRepeat" value="تکرار نامحدود" />
+
+                <text id="fullscreen" value="تمام صفحه" />
+                <text id="read" value="خوانده شده" />
+
+                <text id="days" value="روز" />
+                <text id="ago" value="پیش" />
+
+
+                <text id="copy" value="کپی" />
+				
+				<text id="from" value="از" />
+				<text id="to" value="تا" />
+				<text id="examType" value="نوع آزمون" />
+				<text id="filter" value="فیلتر" />
+				
+				<text id="sound" value="صوتی" />
+				<text id="text" value="متن" />
+				<text id="exam" value="آزمون" />
+				
+				<text id="time" value="زمان" />
+				<text id="readCount" value="دفعات خوانده شده" />
+				<text id="unclear" value="نامشخص" />
+				
+				<text id="today" value="امروز" />
+				<text id="yesterday" value="دیروز" />
+				
+				<text id="shortcutGuide" value="کلیدهای میانبر" />
+				
+				<text id="fazlSore" value="فضیلت و خواص سوره" />
+				<text id="barekatSore" value="آثار و برکات سوره" />
+				
+				<text id="numAye" value="تعداد آیه" />
+				<text id="nozol" value="ترتیب نزول" />
+				<text id="locNozol" value="محل نزول" />
+				
+				<text id="makki" value="مکه" />
+				<text id="madani" value="مدینه" />
+				
+				<text id="soreInfo" value="اطلاعات سوره" />
+				
+				<text id="msg_resetExam" value="برای شروع دوباره برروی Reset کلیک کنید." />
+				
+				<text id="readExam" value="خوانده شود : " />
+				<text id="readPageExam" value="خوانده شود صفحه ی : " />
+				
+				<text id="readExam" value="خوانده شود : " />
+				<text id="readPageExam" value="خوانده شود صفحه ی : " />
+				
+				<text id="contactUs" value="ارتباط با ما" />
+				<text id="visitSite" value="مشاهده سایت" />
+				<text id="userGuide" value="راهنمای کاربر" />
+				
+				
+				
+				
+      </words>
+</language>
