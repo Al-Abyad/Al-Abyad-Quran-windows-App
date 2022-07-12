@@ -34,4 +34,4 @@ Base on QT 5.5.0</p>
 <p dir="auto">Please keep use of this code for non-profit purposes only. Also, please note that the project is under the GPL 3 license, which requires that modifications to this code be open sourced as well. Please note that the data is licensed under the various licenses of the data&#39;s authors (typically, this is <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/" rel="nofollow">CC BY-NC-ND</a>, but may differ depending on the source of the data).</p>
 </div>
 
-<p>![z88761_](https://user-images.githubusercontent.com/40136724/178233746-48a87404-80a7-4961-b9fa-ee1f11d7d956.jpg)</p>
+![z88761_](https://user-images.githubusercontent.com/40136724/178233746-48a87404-80a7-4961-b9fa-ee1f11d7d956.jpg)
