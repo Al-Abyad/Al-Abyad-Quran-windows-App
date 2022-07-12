@@ -1,8 +1,13 @@
-![d52235_](https://user-images.githubusercontent.com/40136724/178233343-0da87625-ed74-4256-bbb6-b3a333a57c18.jpg)
-![p88324_](https://user-images.githubusercontent.com/40136724/178233585-920d2f34-f73e-4a1c-bb13-26ce20e8e6bf.jpg)
-
 <html>
+<head>
+</head>
 <body>
+<p style="text-align: center;">![d52235_](https://user-images.githubusercontent.com/40136724/178233343-0da87625-ed74-4256-bbb6-b3a333a57c18.jpg)</p>
+
+<p style="text-align: center;">![p88324_](https://user-images.githubusercontent.com/40136724/178233585-920d2f34-f73e-4a1c-bb13-26ce20e8e6bf.jpg)</p>
+</body>
+</html>
+<title></title>
 <div align="left" dir="auto">
 <h2 dir="auto"><a aria-hidden="true" class="anchor" href="#credits" id="user-content-credits"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z" fill-rule="evenodd"></path></svg></a>Credits</h2>
 
@@ -33,10 +38,5 @@ Base on QT 5.5.0</p>
 
 <p dir="auto">Please keep use of this code for non-profit purposes only. Also, please note that the project is under the GPL 3 license, which requires that modifications to this code be open sourced as well. Please note that the data is licensed under the various licenses of the data&#39;s authors (typically, this is <a href="https://creativecommons.org/licenses/by-nc-nd/2.0/" rel="nofollow">CC BY-NC-ND</a>, but may differ depending on the source of the data).</p>
 </div>
-</body>
-</html>
 
-
-
-![z88761_](https://user-images.githubusercontent.com/40136724/178233746-48a87404-80a7-4961-b9fa-ee1f11d7d956.jpg)
-
+<p>![z88761_](https://user-images.githubusercontent.com/40136724/178233746-48a87404-80a7-4961-b9fa-ee1f11d7d956.jpg)</p>
