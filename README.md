@@ -1,13 +1,8 @@
 <html>
-<head>
-</head>
-<body>
-<p>![d52235_](https://user-images.githubusercontent.com/40136724/178233343-0da87625-ed74-4256-bbb6-b3a333a57c18.jpg)</p>
+![d52235_](https://user-images.githubusercontent.com/40136724/178233343-0da87625-ed74-4256-bbb6-b3a333a57c18.jpg)
 
-<p>![p88324_](https://user-images.githubusercontent.com/40136724/178233585-920d2f34-f73e-4a1c-bb13-26ce20e8e6bf.jpg)</p>
-</body>
-</html>
-<title></title>
+![p88324_](https://user-images.githubusercontent.com/40136724/178233585-920d2f34-f73e-4a1c-bb13-26ce20e8e6bf.jpg)
+
 <div align="left" dir="auto">
 <h2 dir="auto"><a aria-hidden="true" class="anchor" href="#credits" id="user-content-credits"><svg aria-hidden="true" class="octicon octicon-link" height="16" version="1.1" viewbox="0 0 16 16" width="16"><path d="M7.775 3.275a.75.75 0 001.06 1.06l1.25-1.25a2 2 0 112.83 2.83l-2.5 2.5a2 2 0 01-2.83 0 .75.75 0 00-1.06 1.06 3.5 3.5 0 004.95 0l2.5-2.5a3.5 3.5 0 00-4.95-4.95l-1.25 1.25zm-4.69 9.64a2 2 0 010-2.83l2.5-2.5a2 2 0 012.83 0 .75.75 0 001.06-1.06 3.5 3.5 0 00-4.95 0l-2.5 2.5a3.5 3.5 0 004.95 4.95l1.25-1.25a.75.75 0 00-1.06-1.06l-1.25 1.25a2 2 0 01-2.83 0z" fill-rule="evenodd"></path></svg></a>Credits</h2>
 
